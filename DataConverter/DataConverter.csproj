@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC037DD0-8D39-412A-B874-5762D8A02D4C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataConverter</RootNamespace>
+    <AssemblyName>DataConverter</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DPM, Version=1.4.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\DPM.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Thor.Units">
+      <HintPath>..\References\Thor.Units.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controller\Controller.cs" />
+    <Compile Include="Enumerations\Field.cs" />
+    <Compile Include="Enumerations\FieldMetaData.cs" />
+    <Compile Include="Enumerations\FieldMetaDataContainer.cs" />
+    <Compile Include="Forms\DataTranslatorOptionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\DataTranslatorOptionsControl.Designer.cs">
+      <DependentUpon>DataTranslatorOptionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Delegates.cs" />
+    <Compile Include="Forms\ValidationSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ValidationSelectionForm.Designer.cs">
+      <DependentUpon>ValidationSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditFieldMetaDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditFieldMetaDataForm.Designer.cs">
+      <DependentUpon>EditFieldMetaDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditTranslationMatrixForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditTranslationMatrixForm.Designer.cs">
+      <DependentUpon>EditTranslationMatrixForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\DataTranslaterWinRegistry.cs" />
+    <Compile Include="Interface\Interface.cs" />
+    <Compile Include="Forms\InputReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputReportForm.Designer.cs">
+      <DependentUpon>InputReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InstanceSelect.cs" />
+    <Compile Include="Forms\EditConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditConfigurationForm.Designer.cs">
+      <DependentUpon>EditConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NewOrExistingConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewOrExistingConfigurationForm.Designer.cs">
+      <DependentUpon>NewOrExistingConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ExtractInputNamesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExtractInputNamesForm.Designer.cs">
+      <DependentUpon>ExtractInputNamesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TranslationInputOutputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TranslationInputOutputForm.Designer.cs">
+      <DependentUpon>TranslationInputOutputForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Processors\Common\DataLocation.cs" />
+    <Compile Include="Processors\Common\Processor.cs" />
+    <Compile Include="Processors\Common\ProcessorMetaData.cs" />
+    <Compile Include="Processors\Common\ProcessorObjectFactory.cs" />
+    <Compile Include="Processors\Input Processors\FlatFileInputProcessor.cs" />
+    <Compile Include="Processors\Input Processors\InputProcessor.cs" />
+    <Compile Include="Processors\Input Processors\InputReport.cs" />
+    <Compile Include="Processors\Output Processors\CSVOutputProcessor.cs" />
+    <Compile Include="Processors\Output Processors\ExcelOutputProcessor.cs" />
+    <Compile Include="Processors\Output Processors\FlatFileOutputProcessor.cs" />
+    <Compile Include="Processors\Output Processors\OutputProcessor.cs" />
+    <Compile Include="Translator\Configuration.cs" />
+    <Compile Include="Translator\ConfigurationList.cs" />
+    <Compile Include="Translator\EntryTranslationMetaData.cs" />
+    <Compile Include="Translator\RecordTranslationMetaData.cs" />
+    <Compile Include="Translator\TableTranslationMetaData.cs" />
+    <Compile Include="Translator\TranslationMetaData.cs" />
+    <Compile Include="Translator\DataType.cs" />
+    <Compile Include="Translator\UnitsConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Translator\TranslationMap.cs" />
+    <Compile Include="Translator\TranslationMatrix.cs" />
+    <Compile Include="Translator\Translator.cs" />
+    <Compile Include="Validation\DataFormatValidationCheck.cs" />
+    <Compile Include="Validation\DateLowPassValidationCheck.cs" />
+    <Compile Include="Validation\DateHighPassValidationCheck.cs" />
+    <Compile Include="Validation\NotEnoughFieldsValidationCheck.cs" />
+    <Compile Include="Validation\RecordValidationResult.cs" />
+    <Compile Include="Validation\TooManyFieldsValidationCheck.cs" />
+    <Compile Include="Validation\Validation.cs" />
+    <Compile Include="Validation\ValidationCheck.cs" />
+    <Compile Include="Validation\ValidationReport.cs" />
+    <Compile Include="Validation\Validator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\DataTranslatorOptionsControl.resx">
+      <DependentUpon>DataTranslatorOptionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ValidationSelectionForm.resx">
+      <DependentUpon>ValidationSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditFieldMetaDataForm.resx">
+      <DependentUpon>EditFieldMetaDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditTranslationMatrixForm.resx">
+      <DependentUpon>EditTranslationMatrixForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InputReportForm.resx">
+      <DependentUpon>InputReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditConfigurationForm.resx">
+      <DependentUpon>EditConfigurationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewOrExistingConfigurationForm.resx">
+      <DependentUpon>NewOrExistingConfigurationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExtractInputNamesForm.resx">
+      <DependentUpon>ExtractInputNamesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TranslationInputOutputForm.resx">
+      <DependentUpon>TranslationInputOutputForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Main.cd" />
+    <None Include="Properties\DataSources\FieldMetaData.datasource" />
+    <None Include="Properties\DataSources\TranslationMap.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ProgramData Files\Units.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="User Files\Configuration List.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="User Files\Field Meta Data.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml">
+      <Version>2.20.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataConverter.Processor" Collapsed="true">
+    <Position X="2.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAGAAAAAAACAAAA=</HashCode>
+      <FileName>Processors\Common\Processor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.FlatFileInputProcessor" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAIAAAAAAAgAABAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Processors\Input Processors\FlatFileInputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.AVDAggregateDataInputProcessor" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAECgCAAAAAAAAAAAEAAgAAAAAAAAA=</HashCode>
+      <FileName>Processors\Input Processors\AVDAggregateDataInputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.InputProcessor" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAIAAAAgiAAAAAAAAAAAAAgAAAAAAAIAA=</HashCode>
+      <FileName>Processors\Input Processors\InputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.OutputProcessor" Collapsed="true">
+    <Position X="4.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAQAIAAAACAAAAAAACAAAAAAAAIAAAIAAAgAAAAgAA=</HashCode>
+      <FileName>Processors\Output Processors\OutputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.FlatFileOutputProcessor" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAACAIAAAgAAAAAAAAAAAAACAAAAgAACAgAA=</HashCode>
+      <FileName>Processors\Output Processors\FlatFileOutputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.CSVOutputProcessor" Collapsed="true">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Processors\Output Processors\CSVOutputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.ExcelOutputProcessor" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAQAAAAAACAIAAAAAAEAAAAAAAIAAgAAAAgAACIgIE=</HashCode>
+      <FileName>Processors\Output Processors\ExcelOutputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.Translator" Collapsed="true">
+    <Position X="9" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ARAQAAQBAACAAAAAAACQAAAAAAAYAAAAAAAgAAAAwAA=</HashCode>
+      <FileName>Translator\Translator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_translationMatrix" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DataConverter.ConfigurationList" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgAgAAAABCAgIACAAIAAEAACBAABAAAAEAAAAAAAA=</HashCode>
+      <FileName>Translator\ConfigurationList.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_configurations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataConverter.Configuration" Collapsed="true">
+    <Position X="12.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAIAAAAAAAAAAACAAAAAQABAQAABAAAAAAAAAAAIA=</HashCode>
+      <FileName>Translator\Configuration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.WellLogDataSetOutputProcessor" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAQACAAAAAACCAAQAAAAAAIAAAAAAAAITAAAI=</HashCode>
+      <FileName>Processors\Output Processors\WellLogDataSetOutputProcessor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.Validator" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAARIAAAAACAAAEJAACAEAAAAAAIABAAAAAAAAABggA=</HashCode>
+      <FileName>Validation\Validator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_validationChecks" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataConverter.ValidationCheck" Collapsed="true">
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAACAABAAAAAAAAQgAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Validation\ValidationCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.TooManyFieldsValidationCheck" Collapsed="true">
+    <Position X="8" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Validation\TooManyFieldsValidationCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.DateFormatValidationCheck" Collapsed="true">
+    <Position X="9.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Validation\DateFormatValidationCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.DateHighPassValidationCheck" Collapsed="true">
+    <Position X="11.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAA=</HashCode>
+      <FileName>Validation\DateHighPassValidationCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.DateLowPassValidationCheck" Collapsed="true">
+    <Position X="13.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAA=</HashCode>
+      <FileName>Validation\DateLowPassValidationCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.NotEnoughFieldsValidationCheck" Collapsed="true">
+    <Position X="6" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Validation\NotEnoughFieldsValidationCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataConverter.TranslationMatrix" Collapsed="true">
+    <Position X="12" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACACIACAAIAAAAACBAgAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Translator\TranslationMatrix.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_translationMaps" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DataConverter.TranslationMap" Collapsed="true">
+    <Position X="14.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAICEAAIAAIABIAAgAAAAgIIAAAQAoAAAAAABAAA=</HashCode>
+      <FileName>Translator\TranslationMap.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

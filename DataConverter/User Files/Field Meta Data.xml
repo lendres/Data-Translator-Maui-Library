@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<fieldmetadatacontainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <fieldmetadatalist>
+        <fieldmetadata>
+            <enumname>DateTime</enumname>
+            <shortname>DateTime</shortname>
+            <longname>Date and Time</longname>
+            <catagory> </catagory>
+            <description>Date and time.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>AccelerationX</enumname>
+            <shortname>X Accel</shortname>
+            <longname>X Acceleration</longname>
+            <catagory> </catagory>
+            <description>Acceleration in the X direction.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>AccelerationY</enumname>
+            <shortname>Y Accel</shortname>
+            <longname>Y Acceleration</longname>
+            <catagory> </catagory>
+            <description>Acceleration in the Y direction.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>AccelerationZ</enumname>
+            <shortname>Z Accel</shortname>
+            <longname>Z Acceleration</longname>
+            <catagory> </catagory>
+            <description>Acceleration in the Z direction.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>MagnetometerX</enumname>
+            <shortname>X Mag</shortname>
+            <longname>X Magnetometer</longname>
+            <catagory> </catagory>
+            <description>X direction magnetometer reading.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>MagnetometerY</enumname>
+            <shortname>Y Mag</shortname>
+            <longname>Y Magnetometer</longname>
+            <catagory> </catagory>
+            <description>Y direction magnetometer reading.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Temperature</enumname>
+            <shortname>Temp</shortname>
+            <longname>Temperature</longname>
+            <catagory> </catagory>
+            <description>Temperature.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown1</enumname>
+            <shortname>Unknown 1</shortname>
+            <longname>Unknown 1</longname>
+            <catagory> </catagory>
+            <description>Unknown 1.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown2</enumname>
+            <shortname>Unknown2</shortname>
+            <longname>Unknown 2</longname>
+            <catagory> </catagory>
+            <description>Unknown 2.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown3</enumname>
+            <shortname>Unknown3</shortname>
+            <longname>Unknown 3</longname>
+            <catagory> </catagory>
+            <description>Unknown 3.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown4</enumname>
+            <shortname>Unknown4</shortname>
+            <longname>Unknown 4</longname>
+            <catagory> </catagory>
+            <description>Unknown 4.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown5</enumname>
+            <shortname>Unknown5</shortname>
+            <longname>Unknown 5</longname>
+            <catagory> </catagory>
+            <description>Unknown 5.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown6</enumname>
+            <shortname>Unknown6</shortname>
+            <longname>Unknown 6</longname>
+            <catagory> </catagory>
+            <description>Unknown 6.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown7</enumname>
+            <shortname>Unknown7</shortname>
+            <longname>Unknown 7</longname>
+            <catagory> </catagory>
+            <description>Unknown 7.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown8</enumname>
+            <shortname>Unknown8</shortname>
+            <longname>Unknown 8</longname>
+            <catagory> </catagory>
+            <description>Unknown 8.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown9</enumname>
+            <shortname>Unknown9</shortname>
+            <longname>Unknown 9</longname>
+            <catagory> </catagory>
+            <description>Unknown 9.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown10</enumname>
+            <shortname>Unknown10</shortname>
+            <longname>Unknown 10</longname>
+            <catagory> </catagory>
+            <description>Unknown 10.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown11</enumname>
+            <shortname>Unknown11</shortname>
+            <longname>Unknown 11</longname>
+            <catagory> </catagory>
+            <description>Unknown 11.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown12</enumname>
+            <shortname>Unknown12</shortname>
+            <longname>Unknown 12</longname>
+            <catagory> </catagory>
+            <description>Unknown 12.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown13</enumname>
+            <shortname>Unknown13</shortname>
+            <longname>Unknown 13</longname>
+            <catagory> </catagory>
+            <description>Unknown 13.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown14</enumname>
+            <shortname>Unknown14</shortname>
+            <longname>Unknown 14</longname>
+            <catagory> </catagory>
+            <description>Unknown 14.</description>
+        </fieldmetadata>
+        <fieldmetadata>
+            <enumname>Unknown15</enumname>
+            <shortname>Unknown15</shortname>
+            <longname>Unknown 15</longname>
+            <catagory> </catagory>
+            <description>Unknown 15.</description>
+        </fieldmetadata>
+    </fieldmetadatalist>
+</fieldmetadatacontainer>

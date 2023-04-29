@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<configurationlist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <configurations>
+        <configuration name="AVD Aggregate Data to Excel File">
+            <inputprocessor>AVD Aggregate Data Input Processor</inputprocessor>
+            <outputprocessor>Excel Output Processor</outputprocessor>
+            <translationmapfile>AVD, VMS, and VMM Aggregate Data.transmtx</translationmapfile>
+        </configuration>
+        <configuration name="AVD Aggregate Data to CSV File">
+            <inputprocessor>AVD Aggregate Data Input Processor</inputprocessor>
+            <outputprocessor>CSV Output Processor</outputprocessor>
+            <translationmapfile>AVD, VMS, and VMM Aggregate Data.transmtx</translationmapfile>
+        </configuration>
+        <configuration name="AVD Aggregate Data to WellLog Data Set">
+            <inputprocessor>AVD Aggregate Data Input Processor</inputprocessor>
+            <outputprocessor>WellLog Data Set Output Operator</outputprocessor>
+            <translationmapfile>AVD, VMS, and VMM Aggregate Data.transmtx</translationmapfile>
+        </configuration>
+        <configuration name="DDM to WellLog Data Set">
+            <inputprocessor>DDM Aggregate Data Input Processor</inputprocessor>
+            <outputprocessor>WellLog Data Set Output Operator</outputprocessor>
+            <translationmapfile>DDM.transmtx</translationmapfile>
+        </configuration>
+        <configuration name="VMM Aggregate Data to WellLog Data Set">
+            <inputprocessor>VMM Aggregate Data Input Processor</inputprocessor>
+            <outputprocessor>WellLog Data Set Output Operator</outputprocessor>
+            <translationmapfile>AVD, VMS, and VMM Aggregate Data.transmtx</translationmapfile>
+        </configuration>
+        <configuration name="VMS Aggregate Data to WellLog Data Set">
+            <inputprocessor>VMS Aggregate Data Input Processor</inputprocessor>
+            <outputprocessor>WellLog Data Set Output Operator</outputprocessor>
+            <translationmapfile>AVD, VMS, and VMM Aggregate Data.transmtx</translationmapfile>
+        </configuration>
+    </configurations>
+</configurationlist>
