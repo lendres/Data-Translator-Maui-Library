@@ -123,7 +123,7 @@ namespace DataConverter
 		public List<FieldMetaData> CloneFieldMetaData()
 		{
 			int numberOfEntries					= _fieldMetaData.Count;
-			List<FieldMetaData> fieldMetaData	= new List<DataTranslator.FieldMetaData>(numberOfEntries);
+			List<FieldMetaData> fieldMetaData	= new List<FieldMetaData>(numberOfEntries);
 			
 			for (int i = 0; i < numberOfEntries; i++)
 			{

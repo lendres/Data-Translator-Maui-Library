@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataConverter</RootNamespace>
     <AssemblyName>DataConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,12 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DPM, Version=1.4.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\DPM.dll</HintPath>
+    <Reference Include="DPM">
+      <HintPath>..\..\References\DPM.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -50,15 +47,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Thor.Units">
-      <HintPath>..\References\Thor.Units.dll</HintPath>
+      <HintPath>..\..\References\Thor.Units.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Controller.cs" />
-    <Compile Include="Enumerations\Field.cs" />
-    <Compile Include="Enumerations\FieldMetaData.cs" />
-    <Compile Include="Enumerations\FieldMetaDataContainer.cs" />
+    <Compile Include="Fields\Field.cs" />
+    <Compile Include="Fields\FieldMetaData.cs" />
+    <Compile Include="Fields\FieldMetaDataContainer.cs" />
     <Compile Include="Forms\DataTranslatorOptionsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,7 +122,6 @@
     <Compile Include="Processors\Input Processors\InputProcessor.cs" />
     <Compile Include="Processors\Input Processors\InputReport.cs" />
     <Compile Include="Processors\Output Processors\CSVOutputProcessor.cs" />
-    <Compile Include="Processors\Output Processors\ExcelOutputProcessor.cs" />
     <Compile Include="Processors\Output Processors\FlatFileOutputProcessor.cs" />
     <Compile Include="Processors\Output Processors\OutputProcessor.cs" />
     <Compile Include="Translator\Configuration.cs" />
