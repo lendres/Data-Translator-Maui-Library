@@ -1,12 +1,9 @@
-﻿using System;
+﻿using DigitalProduction.Reflection;
+using DigitalProduction.XML.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.Xml.Serialization;
-using DigitalProduction.XML.Serialization;
-using DigitalProduction.Reflection;
 
 namespace DataConverter
 {
