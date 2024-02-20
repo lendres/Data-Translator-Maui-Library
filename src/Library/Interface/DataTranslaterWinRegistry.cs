@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DigitalProduction.Forms;
 using Microsoft.Win32;
-using DigitalProduction.Registry;
 
 namespace DataConverter
 {
 	/// <summary>
 	/// Registry access and setting storage.
 	/// </summary>
-	public class DataTranslatorWinRegistry : WinRegistryAccess
+	public class DataTranslatorWinRegistry
 	{
 		#region Members
 
@@ -22,10 +20,8 @@ namespace DataConverter
 		/// Constructor.
 		/// </summary>
 		/// <param name="owner">Windows form that owns this registry.</param>
-		public DataTranslatorWinRegistry(WinRegistryAccess winRegistryAccess) :
-			base(winRegistryAccess)
+		public DataTranslatorWinRegistry()
 		{
-			winRegistryAccess.Install	+= this.OnInstall;
 		}
 
 		/// <summary>
@@ -73,28 +69,9 @@ namespace DataConverter
 		/// Return the key that holds the data translator entries.
 		/// </summary>
 		/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
-		protected RegistryKey TranslationKey()
+		protected string TranslationKey()
 		{
-			RegistryKey translationKey;
-
-			try
-			{
-				RegistryKey appKey = AppKey();
-
-				if (appKey == null)
-				{
-					return null;
-				}
-
-				// Open the Window State key.
-				translationKey = appKey.CreateSubKey("Data Translation");
-			}
-			catch
-			{
-				return null;
-			}
-
-			return translationKey;
+			return "DataTranslation.";
 		}
 
 
@@ -102,28 +79,9 @@ namespace DataConverter
 		/// Return the key that holds the options.
 		/// </summary>
 		/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
-		protected RegistryKey OptionsKey()
+		protected string OptionsKey()
 		{
-			RegistryKey optionsKey;
-
-			try
-			{
-				RegistryKey translationKey = TranslationKey();
-
-				if (translationKey == null)
-				{
-					return null;
-				}
-
-				// Open the Window State key.
-				optionsKey = translationKey.CreateSubKey("Options");
-			}
-			catch
-			{
-				return null;
-			}
-
-			return optionsKey;
+			return TranslationKey() + "Options.";
 		}
 
 		#endregion
@@ -137,12 +95,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(OptionsKey(), "Translation Matrix Directory", ".\\ProgramData Files");
+				return Preferences.Default.Get(OptionsKey()+"Translation Matrix Directory", ".\\ProgramData Files");
 			}
 
 			set
 			{
-				SetValue(OptionsKey(), "Translation Matrix Directory", value);
+				Preferences.Default.Set(OptionsKey()+"Translation Matrix Directory", value);
 			}
 		}
 
@@ -153,12 +111,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(OptionsKey(), "Units File", ".\\User Files\\Units.xml");
+				return Preferences.Default.Get(OptionsKey()+"Units File", ".\\User Files\\Units.xml");
 			}
 
 			set
 			{
-				SetValue(OptionsKey(), "Units File", value);
+				Preferences.Default.Set(OptionsKey()+"Units File", value);
 			}
 		}
 
@@ -169,12 +127,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(OptionsKey(), "Configuration List File", ".\\User Files\\Configuration List.xml");
+				return Preferences.Default.Get(OptionsKey()+"Configuration List File", ".\\User Files\\Configuration List.xml");
 			}
 
 			set
 			{
-				SetValue(OptionsKey(), "Configuration List File", value);
+				Preferences.Default.Set(OptionsKey()+"Configuration List File", value);
 			}
 		}
 
@@ -185,12 +143,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(OptionsKey(), "Field Meta Data File", ".\\ProgramData Files\\Field Meta Data.xml");
+				return Preferences.Default.Get(OptionsKey()+"Field Meta Data File", ".\\ProgramData Files\\Field Meta Data.xml");
 			}
 
 			set
 			{
-				SetValue(OptionsKey(), "Field Meta Data File", value);
+				Preferences.Default.Set(OptionsKey()+"Field Meta Data File", value);
 			}
 		}
 
@@ -201,12 +159,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "Last Translation Input File", System.IO.Directory.GetCurrentDirectory());
+				return Preferences.Default.Get(TranslationKey()+"Last Translation Input File", System.IO.Directory.GetCurrentDirectory());
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "Last Translation Input File", value);
+				Preferences.Default.Set(TranslationKey()+"Last Translation Input File", value);
 			}
 		}
 
@@ -217,12 +175,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "Last Translation Output File", System.IO.Directory.GetCurrentDirectory());
+				return Preferences.Default.Get(TranslationKey()+"Last Translation Output File", System.IO.Directory.GetCurrentDirectory());
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "Last Translation Output File", value);
+				Preferences.Default.Set(TranslationKey()+"Last Translation Output File", value);
 			}
 		}
 
@@ -230,12 +188,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "Number Of Columns Must Match Validation", false);
+				return Preferences.Default.Get(TranslationKey()+"Number Of Columns Must Match Validation", false);
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "Number Of Columns Must Match Validation", value);
+				Preferences.Default.Set(TranslationKey()+"Number Of Columns Must Match Validation", value);
 			}
 		}
 
@@ -243,12 +201,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "Date Time Formatted Correctly", false);
+				return Preferences.Default.Get(TranslationKey()+"Date Time Formatted Correctly", false);
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "Date Time Formatted Correctly", value);
+				Preferences.Default.Set(TranslationKey()+"Date Time Formatted Correctly", value);
 			}
 		}
 
@@ -256,12 +214,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "High Pass Date", false);
+				return Preferences.Default.Get(TranslationKey()+"High Pass Date", false);
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "High Pass Date", value);
+				Preferences.Default.Set(TranslationKey()+"High Pass Date", value);
 			}
 		}
 
@@ -269,12 +227,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "High Pass Date Cut Off", System.DateTime.Now);
+				return Preferences.Default.Get(TranslationKey()+"High Pass Date Cut Off", System.DateTime.Now);
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "High Pass Date Cut Off", value);
+				Preferences.Default.Set(TranslationKey()+"High Pass Date Cut Off", value);
 			}
 		}
 
@@ -282,12 +240,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "Low Pass Date", false);
+				return Preferences.Default.Get(TranslationKey()+"Low Pass Date", false);
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "Low Pass Date", value);
+				Preferences.Default.Set(TranslationKey()+"Low Pass Date", value);
 			}
 		}
 
@@ -295,12 +253,12 @@ namespace DataConverter
 		{
 			get
 			{
-				return GetValue(TranslationKey(), "Low Pass Date Cut Off", System.DateTime.Now);
+				return Preferences.Default.Get(TranslationKey()+"Low Pass Date Cut Off", System.DateTime.Now);
 			}
 
 			set
 			{
-				SetValue(TranslationKey(), "Low Pass Date Cut Off", value);
+				Preferences.Default.Set(TranslationKey()+"Low Pass Date Cut Off", value);
 			}
 		}
 
