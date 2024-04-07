@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data-Translation-Maui-Library", ".\Library\Data-Translation-Maui-Library.csproj", "{B382F06E-26AF-4707-B8A2-C7AAC8CB54C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Translation Maui Library", "Data Translation Maui Library.csproj", "{B382F06E-26AF-4707-B8A2-C7AAC8CB54C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
