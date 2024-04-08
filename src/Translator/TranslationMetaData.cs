@@ -1,53 +1,52 @@
-﻿namespace DataConverter
+﻿namespace DataConverter;
+
+/// <summary>
+/// Meta data used for translations.
+/// </summary>
+public abstract class TranslationMetaData
 {
+	#region Members
+	
+	private readonly int						_number;
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Meta data used for translations.
+	/// Default constructor.
 	/// </summary>
-	public abstract class TranslationMetaData
+	protected TranslationMetaData()
 	{
-		#region Members
-		
-		private int						_number;
+	}
 
-		#endregion
+	/// <summary>
+	/// Constructor.
+	/// </summary>
+	public TranslationMetaData(int number)
+	{
+		_number	= number;
+	}
 
-		#region Construction
+	#endregion
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		protected TranslationMetaData()
+	#region Properties
+
+	/// <summary>
+	/// Count or number.
+	/// </summary>
+	public int Number
+	{
+		get
 		{
+			return _number;
 		}
+	}
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public TranslationMetaData(int number)
-		{
-			_number	= number;
-		}
+	#endregion
 
-		#endregion
+	#region Methods
 
-		#region Properties
+	#endregion
 
-		/// <summary>
-		/// Count or number.
-		/// </summary>
-		public int Number
-		{
-			get
-			{
-				return _number;
-			}
-		}
-
-		#endregion
-
-		#region Methods
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

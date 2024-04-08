@@ -1,66 +1,66 @@
-﻿namespace DataConverter
+﻿namespace DataConverter;
+
+/// <summary>
+/// Meta data used for translations.
+/// </summary>
+public class RecordTranslationMetaData : TranslationMetaData
 {
+	#region Members
+
+	private string					_name		= "";
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Meta data used for translations.
+	/// Default constructor.
 	/// </summary>
-	public class RecordTranslationMetaData : TranslationMetaData
+	private RecordTranslationMetaData()
 	{
-		#region Members
+	}
 
-		private string					_name;
+	/// <summary>
+	/// Constructor.
+	/// </summary>
+	public RecordTranslationMetaData(string name)
+	{
+		_name	= name;
+	}
 
-		#endregion
+	/// <summary>
+	/// Constructor.
+	/// </summary>
+	public RecordTranslationMetaData(string name, int number) :
+		base(number)
+	{
+		_name = name;
+	}
 
-		#region Construction
+	#endregion
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		private RecordTranslationMetaData()
+	#region Properties
+
+	/// <summary>
+	/// Name or type of data.
+	/// </summary>
+	public string Name
+	{
+		get
 		{
+			return _name;
 		}
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public RecordTranslationMetaData(string name)
+		set
 		{
-			_name	= name;
+			_name = value;
 		}
+	}
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public RecordTranslationMetaData(string name, int number) :
-			base(number)
-		{
-		}
+	#endregion
 
-		#endregion
+	#region Methods
 
-		#region Properties
+	#endregion
 
-		/// <summary>
-		/// Name or type of data.
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return _name;
-			}
-
-			set
-			{
-				_name = value;
-			}
-		}
-
-		#endregion
-
-		#region Methods
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

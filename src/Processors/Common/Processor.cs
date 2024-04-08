@@ -1,59 +1,58 @@
-﻿namespace DataConverter
+﻿namespace DataConverter;
+
+/// <summary>
+/// Base class for processors.
+/// </summary>
+public abstract class Processor
 {
+	#region Members
+
+	private string					_openLocation		= "";
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Base class for processors.
+	/// Default constructor.
 	/// </summary>
-	public abstract class Processor
+	public Processor()
 	{
-		#region Members
+	}
 
-		private string					_openLocation		= "";
+	#endregion
 
-		#endregion
+	#region Properties
 
-		#region Construction
-
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public Processor()
+	/// <summary>
+	/// Path, URL, or connection string used to open the input or output.
+	/// </summary>
+	public string OpenLocation
+	{
+		get
 		{
+			return _openLocation;
 		}
+	}
 
-		#endregion
+	#endregion
 
-		#region Properties
+	#region Methods
 
-		/// <summary>
-		/// Path, URL, or connection string used to open the input or output.
-		/// </summary>
-		public string OpenLocation
-		{
-			get
-			{
-				return _openLocation;
-			}
-		}
+	/// <summary>
+	/// Open data source/destination.
+	/// </summary>
+	/// <param name="location">Location to open from.</param>
+	public virtual void Open(string location)
+	{
+		_openLocation = location;
+	}
 
-		#endregion
+	/// <summary>
+	/// Close the output file.
+	/// </summary>
+	public abstract void Close();
 
-		#region Methods
+	#endregion
 
-		/// <summary>
-		/// Open data source/destination.
-		/// </summary>
-		/// <param name="location">Location to open from.</param>
-		public virtual void Open(string location)
-		{
-			_openLocation = location;
-		}
-
-		/// <summary>
-		/// Close the output file.
-		/// </summary>
-		public abstract void Close();
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

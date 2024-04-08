@@ -2,294 +2,290 @@
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace DataConverter
+namespace DataConverter;
+
+/// <summary>
+/// Contains the information required to map input data to a known data type.
+/// </summary>
+public class TranslationMap : INotifyPropertyChanged
 {
+	#region Events
+
+	public event PropertyChangedEventHandler?		PropertyChanged;
+
+	#endregion
+
+	#region Members
+
+	private string						_inputName					= "Unknown";
+	private Field						_outputField				= Field.Unknown;
+	private DataType					_dataType					= DataType.String;
+	private UnitsConverter				_unitsConverter				= new();
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Contains the information required to map input data to a known data type.
+	/// Default constructor.
 	/// </summary>
-	public class TranslationMap : INotifyPropertyChanged
+	public TranslationMap()
 	{
-		#region Events
+	}
 
-		public event PropertyChangedEventHandler		PropertyChanged;
+	/// <summary>
+	/// Constructor.
+	/// </summary>
+	public TranslationMap(string inputName)
+	{
+		_inputName		= inputName;
+	}
 
-		#endregion
+	/// <summary>
+	/// Copy constructor.
+	/// </summary>
+	public TranslationMap(TranslationMap source)
+	{
+		_inputName		= source._inputName;
+		_outputField	= source._outputField;
+		_unitsConverter = new UnitsConverter(source._unitsConverter);
+		_dataType		= source._dataType;
+	}
 
-		#region Members
+	#endregion
 
-		private string						_inputName					= "Unknown";
-		private Field						_outputField				= Field.Unknown;
-		private DataType					_dataType					= DataType.String;
-		private UnitsConverter				_unitsConverter				= new UnitsConverter();
+	#region Properties
 
-		#endregion
-
-		#region Construction
-
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public TranslationMap()
+	/// <summary>
+	/// Name in the input file.
+	/// </summary>
+	[XmlAttribute("inputname")]
+	public string InputName
+	{
+		get
 		{
+			return _inputName;
 		}
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public TranslationMap(string inputName)
+		set
 		{
-			_inputName		= inputName;
+			_inputName = value;
+			NotifyPropertyChanged("InputName");
+		}
+	}
+
+	/// <summary>
+	/// Name to convert to.  A string associated with the OutputField.
+	/// </summary>
+	[XmlIgnore()]
+	public string OutputName
+	{
+		get
+		{
+			// If the Field type was not known (no TranslationMap was configured) then we get an Unknown value.  For this case,
+			// we wish to pass along the input name as the output name.  This allows us to identify or separate the input values
+			// from each other.
+			//if (_outputField == Field.Unknown)
+			//{
+			//	return _inputName;
+			//}
+			//else
+			//{
+			return Attributes.GetDescription(_outputField);
+			//}
 		}
 
-		/// <summary>
-		/// Copy constructor.
-		/// </summary>
-		public TranslationMap(TranslationMap source)
+		set
 		{
-			_inputName		= source._inputName;
-			_outputField	= source._outputField;
-			_unitsConverter = new UnitsConverter(source._unitsConverter);
-			_dataType		= source._dataType;
+			this.OutputField = Enumerations.GetInstanceFromDescription<Field>(value);
+			NotifyPropertyChanged("OutputName");
+		}
+	}
+
+	/// <summary>
+	/// Type of Field to convert to.
+	/// </summary>
+	[XmlAttribute("outputfield")]
+	public Field OutputField
+	{
+		get
+		{
+			return _outputField;
 		}
 
-		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Name in the input file.
-		/// </summary>
-		[XmlAttribute("inputname")]
-		public string InputName
+		set
 		{
-			get
-			{
-				return _inputName;
-			}
+			_outputField = value;
+			NotifyPropertyChanged("OutputField");
+		}
+	}
 
-			set
+	/// <summary>
+	/// Provides the best available unique name of the input source.  If the TranslationMap exists and has it's OutputField set to any value
+	/// except "Unknown," this returns the OutputName.  If the OutputField == Field.Unknown then this returns the InputName.
+	/// </summary>
+	[XmlIgnore()]
+	public string ResolvedName
+	{
+		get
+		{
+			//If the Field type was not known (no TranslationMap was configured) then we get an Unknown value.  For this case,
+			//we wish to pass along the input name as the output name.  This allows us to identify or separate the input values
+			//from each other.
+			if (_outputField == Field.Unknown)
 			{
-				_inputName = value;
-				NotifyPropertyChanged("InputName");
+				return this.InputName;
+			}
+			else
+			{
+				return this.OutputName;
 			}
 		}
+	}
 
-		/// <summary>
-		/// Name to convert to.  A string associated with the OutputField.
-		/// </summary>
-		[XmlIgnore()]
-		public string OutputName
+	/// <summary>
+	/// Type of data.
+	/// </summary>
+	[XmlElement("type")]
+	public DataType DataType
+	{
+		get
 		{
-			get
-			{
-				// If the Field type was not known (no TranslationMap was configured) then we get an Unknown value.  For this case,
-				// we wish to pass along the input name as the output name.  This allows us to identify or separate the input values
-				// from each other.
-				//if (_outputField == Field.Unknown)
-				//{
-				//	return _inputName;
-				//}
-				//else
-				//{
-				return Attributes.GetDescription(_outputField);
-				//}
-			}
-
-			set
-			{
-				this.OutputField = Enumerations.GetInstanceFromDescription<Field>(value);
-				NotifyPropertyChanged("OutputName");
-			}
+			return _dataType;
 		}
 
-		/// <summary>
-		/// Type of Field to convert to.
-		/// </summary>
-		[XmlAttribute("outputfield")]
-		public Field OutputField
+		set
 		{
-			get
-			{
-				return _outputField;
-			}
+			_dataType = value;
+		}
+	}
 
-			set
-			{
-				_outputField = value;
-				NotifyPropertyChanged("OutputField");
-			}
+	/// <summary>
+	/// Type of data as a description string.  Used for data binding on the edit form..
+	/// </summary>
+	[XmlIgnore()]
+	public string DataTypeString
+	{
+		get
+		{
+			return Attributes.GetDescription(_dataType);
 		}
 
-		/// <summary>
-		/// Provides the best available unique name of the input source.  If the TranslationMap exists and has it's OutputField set to any value
-		/// except "Unknown," this returns the OutputName.  If the OutputField == Field.Unknown then this returns the InputName.
-		/// </summary>
-		[XmlIgnore()]
-		public string ResolvedName
+		set
 		{
-			get
-			{
-				//If the Field type was not known (no TranslationMap was configured) then we get an Unknown value.  For this case,
-				//we wish to pass along the input name as the output name.  This allows us to identify or separate the input values
-				//from each other.
-				if (_outputField == Field.Unknown)
-				{
-					return this.InputName;
-				}
-				else
-				{
-					return this.OutputName;
-				}
-			}
+			_dataType = Enumerations.GetInstanceFromDescription<DataType>(value);
+			NotifyPropertyChanged("DataTypeString");
+		}
+	}
+
+	/// <summary>
+	/// Data used to change the units from those in the input file to internal units.
+	/// </summary>
+	[XmlElement("conversion")]
+	public UnitsConverter UnitsConverter
+	{
+		get
+		{
+			return _unitsConverter;
 		}
 
-		/// <summary>
-		/// Type of data.
-		/// </summary>
-		[XmlElement("type")]
-		public DataType DataType
+		set
 		{
-			get
-			{
-				return _dataType;
-			}
+			_unitsConverter = value;
+		}
+	}
 
-			set
-			{
-				_dataType = value;
-			}
+	/// <summary>
+	/// Data binding access to units.
+	/// </summary>
+	[XmlIgnore()]
+	public bool NegateUnits
+	{
+		get
+		{
+			return _unitsConverter.Negate;
 		}
 
-		/// <summary>
-		/// Type of data as a description string.  Used for data binding on the edit form..
-		/// </summary>
-		[XmlIgnore()]
-		public string DataTypeString
+		set
 		{
-			get
-			{
-				return Attributes.GetDescription(_dataType);
-			}
+			_unitsConverter.Negate = value;
+			NotifyPropertyChanged("NegateUnits");
+		}
+	}
 
-			set
-			{
-				_dataType = Enumerations.GetInstanceFromDescription<DataType>(value);
-				NotifyPropertyChanged("DataTypeString");
-			}
+	/// <summary>
+	/// Data binding access to units.
+	/// </summary>
+	[XmlIgnore()]
+	public string CatagoryOfUnits
+	{
+		get
+		{
+			return _unitsConverter.Category;
 		}
 
-		/// <summary>
-		/// Data used to change the units from those in the input file to internal units.
-		/// </summary>
-		[XmlElement("conversion")]
-		public UnitsConverter UnitsConverter
+		set
 		{
-			get
-			{
-				return _unitsConverter;
-			}
+			_unitsConverter.Category = value;
+			NotifyPropertyChanged("CatagoryOfUnits");
+		}
+	}
 
-			set
-			{
-				_unitsConverter = value;
-			}
+	/// <summary>
+	/// Data binding access to units.
+	/// </summary>
+	[XmlIgnore()]
+	public string FromUnits
+	{
+		get
+		{
+			return _unitsConverter.From;
 		}
 
-		/// <summary>
-		/// Data binding access to units.
-		/// </summary>
-		[XmlIgnore()]
-		public bool NegateUnits
+		set
 		{
-			get
-			{
-				return _unitsConverter.Negate;
-			}
+			_unitsConverter.From = value;
+			NotifyPropertyChanged("FromUnits");
+		}
+	}
 
-			set
-			{
-				_unitsConverter.Negate = value;
-				NotifyPropertyChanged("NegateUnits");
-			}
+	/// <summary>
+	/// Data binding access to units.
+	/// </summary>
+	[XmlIgnore()]
+	public string ToUnits
+	{
+		get
+		{
+			return _unitsConverter.To;
 		}
 
-		/// <summary>
-		/// Data binding access to units.
-		/// </summary>
-		[XmlIgnore()]
-		public string CatagoryOfUnits
+		set
 		{
-			get
-			{
-				return _unitsConverter.Category;
-			}
-
-			set
-			{
-				_unitsConverter.Category = value;
-				NotifyPropertyChanged("CatagoryOfUnits");
-			}
+			_unitsConverter.To = value;
+			NotifyPropertyChanged("ToUnits");
 		}
+	}
 
-		/// <summary>
-		/// Data binding access to units.
-		/// </summary>
-		[XmlIgnore()]
-		public string FromUnits
-		{
-			get
-			{
-				return _unitsConverter.From;
-			}
+	#endregion
 
-			set
-			{
-				_unitsConverter.From = value;
-				NotifyPropertyChanged("FromUnits");
-			}
-		}
+	#region Methods
 
-		/// <summary>
-		/// Data binding access to units.
-		/// </summary>
-		[XmlIgnore()]
-		public string ToUnits
-		{
-			get
-			{
-				return _unitsConverter.To;
-			}
+	#endregion
 
-			set
-			{
-				_unitsConverter.To = value;
-				NotifyPropertyChanged("ToUnits");
-			}
-		}
+	#region Interfaces and Events
 
-		#endregion
+	/// <summary>
+	/// Notify that a property changed.
+	/// 
+	/// INotifyPropertyChanged Interface
+	/// </summary>
+	/// <param name="info">Information.</param>
+	private void NotifyPropertyChanged(string info)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
+	}
 
-		#region Methods
+	#endregion
 
-		#endregion
-
-		#region Interfaces and Events
-
-		/// <summary>
-		/// Notify that a property changed.
-		/// 
-		/// INotifyPropertyChanged Interface
-		/// </summary>
-		/// <param name="info">Information.</param>
-		private void NotifyPropertyChanged(string info)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(info));
-			}
-		}
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

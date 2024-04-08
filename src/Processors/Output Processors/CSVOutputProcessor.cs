@@ -1,26 +1,25 @@
-﻿namespace DataConverter
+﻿namespace DataConverter;
+
+/// <summary>
+/// Excel output processors.
+/// </summary>
+[ProcessorMetaData(Name = "CSV Output Processor",
+				   DataLocation = DataLocation.Disk,
+				   FilterString = "Comma Separated Values files (*.csv)|*.csv|Text files (*.txt)|*.txt|All files (*.*)|*.*",
+				   Description = ""
+				  )
+]
+public class CSVOutputProcessor : FlatFileOutputProcessor
 {
+	#region Construction
+
 	/// <summary>
-	/// Excel output processors.
+	/// Default constructor.
 	/// </summary>
-	[ProcessorMetaData(Name = "CSV Output Processor",
-					   DataLocation = DataLocation.Disk,
-					   FilterString = "Comma Separated Values files (*.csv)|*.csv|Text files (*.txt)|*.txt|All files (*.*)|*.*",
-					   Description = ""
-					  )
-	]
-	public class CSVOutputProcessor : FlatFileOutputProcessor
+	public CSVOutputProcessor() : base(",")
 	{
-		#region Construction
+	}
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public CSVOutputProcessor() : base(",")
-		{
-		}
+	#endregion
 
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

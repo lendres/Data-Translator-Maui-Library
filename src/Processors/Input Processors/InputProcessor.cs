@@ -1,86 +1,83 @@
-﻿using System.Collections.Generic;
+﻿namespace DataConverter;
 
-namespace DataConverter
+/// <summary>
+/// Base class for input processors.
+/// </summary>
+public abstract class InputProcessor : Processor
 {
+	#region Members
+
+	protected InputReport?					_inputReport;
+	protected Validator?					_validator;
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Base class for input processors.
+	/// Default constructor.
 	/// </summary>
-	public abstract class InputProcessor : Processor
+	public InputProcessor()
 	{
-		#region Members
+	}
 
-		protected InputReport					_inputReport;
-		protected Validator						_validator;
+	#endregion
 
-		#endregion
+	#region Properties
 
-		#region Construction
-
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public InputProcessor()
+	/// <summary>
+	/// Statics and information about the data read from the input.
+	/// </summary>
+	public InputReport? InputReport
+	{
+		get
 		{
+			return _inputReport;
+		}
+	}
+
+	/// <summary>
+	/// The Validator the InputProcessor will pass data and commands to.
+	/// </summary>
+	public Validator? Validator
+	{
+		get
+		{
+			return _validator;
 		}
 
-		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Statics and information about the data read from the input.
-		/// </summary>
-		public InputReport InputReport
+		set
 		{
-			get
-			{
-				return _inputReport;
-			}
+			_validator = value;
 		}
+	}
 
-		/// <summary>
-		/// The Validator the InputProcessor will pass data and commands to.
-		/// </summary>
-		public Validator Validator
-		{
-			get
-			{
-				return _validator;
-			}
+	#endregion
 
-			set
-			{
-				_validator = value;
-			}
-		}
+	#region Methods
 
-		#endregion
+	/// <summary>
+	/// Open data source/destination.
+	/// </summary>
+	/// <param name="location">Location to open from.</param>
+	public override void Open(string location)
+	{
+		base.Open(location);
 
-		#region Methods
+		// Reset the report.
+		_inputReport	= new InputReport();
+	}
 
-		/// <summary>
-		/// Open data source/destination.
-		/// </summary>
-		/// <param name="location">Location to open from.</param>
-		public override void Open(string location)
-		{
-			base.Open(location);
+	/// <summary>
+	/// Process the file.
+	/// </summary>
+	public abstract void Process();
 
-			// Reset the report.
-			_inputReport	= new InputReport();
-		}
+	/// <summary>
+	/// Reads the input names out of the file.
+	/// </summary>
+	public abstract List<string> ExtractInputNames();
 
-		/// <summary>
-		/// Process the file.
-		/// </summary>
-		public abstract void Process();
+	#endregion
 
-		/// <summary>
-		/// Reads the input names out of the file.
-		/// </summary>
-		public abstract List<string> ExtractInputNames();
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

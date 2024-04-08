@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataConverter;
+﻿namespace DataConverter;
 
 /// <summary>
 /// Controller to convert from one data format to another.
@@ -9,7 +7,7 @@ public partial class Translator
 {
 	#region Members
 
-	private TranslationMatrix?				_translationMatrix;
+	private readonly TranslationMatrix?		_translationMatrix;
 
 	private bool							_processingRecord;
 	private bool							_processingTable;
@@ -91,6 +89,11 @@ public partial class Translator
 	/// <param name="metaData">Meta data to translate.</param>
 	public void TranslateMetaData(EntryTranslationMetaData metaData)
 	{
+		if (_translationMatrix == null)
+		{
+			throw new NullReferenceException("The translation matrix is null.");
+		}
+
 		TranslationMap translationMap	= _translationMatrix[metaData.InputName];
 
 		// We use the ResovledName instead of the OutputName for the meta data.  The difference is that the OutputName is the mapped
@@ -109,6 +112,11 @@ public partial class Translator
 	/// <param name="metaData">MetaData describing the field.</param>
 	public void Entry(string data, EntryTranslationMetaData metaData)
 	{
+		if (_translationMatrix == null)
+		{
+			throw new NullReferenceException("The translation matrix is null.");
+		}
+
 		TranslationMap translationMap = _translationMatrix[metaData.InputName];
 
 		switch (translationMap.DataType)
@@ -123,8 +131,10 @@ public partial class Translator
 
 			case DataType.DateTime:
 			{
-				DateTime convertedData;
-				Validation.TryParseDate(data, out convertedData);
+				if (!Validation.TryParseDate(data, out DateTime convertedData))
+				{
+					convertedData = DateTime.MinValue;
+				}
 				_outputProcessor?.Entry(convertedData, metaData);
 				break;
 			}
@@ -164,6 +174,11 @@ public partial class Translator
 	/// <param name="metaData">MetaData describing the table.</param>
 	public void NewTable(TableTranslationMetaData metaData)
 	{
+		if (_translationMatrix == null)
+		{
+			throw new NullReferenceException("The translation matrix is null.");
+		}
+
 		// Ensure the previous table was properly closed.  No cheating by the InputProcessors.
 		System.Diagnostics.Debug.Assert(!_processingTable, "The previous Table must be closed before a new one can be opened.", "\"EndTable\" must be called be another call to \"NewTable\".");
 		_processingTable = true;

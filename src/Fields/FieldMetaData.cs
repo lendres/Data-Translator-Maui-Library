@@ -1,145 +1,144 @@
 ﻿using System.Xml.Serialization;
 
-namespace DataConverter
+namespace DataConverter;
+
+/// <summary>
+/// Meta data associated with a field (entry).  Has descriptors that can be used to populate forms and controls.
+/// </summary>
+public class FieldMetaData
 {
+	#region Members
+
+	private string				_enumName				= " ";
+	private string				_shortName				= " ";
+	private string				_longName				= " ";
+	private string				_catagory				= " ";
+	private string				_description			= " ";
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Meta data associated with a field (entry).  Has descriptors that can be used to populate forms and controls.
+	/// Default constructor.
 	/// </summary>
-	public class FieldMetaData
+	private FieldMetaData()
 	{
-		#region Members
+	}
 
-		private string				_enumName				= " ";
-		private string				_shortName				= " ";
-		private string				_longName				= " ";
-		private string				_catagory				= " ";
-		private string				_description			= " ";
+	/// <summary>
+	/// Blank constructor.
+	/// </summary>
+	public FieldMetaData(string enumName)
+	{
+		_enumName = enumName;
+	}
 
-		#endregion
+	/// <summary>
+	/// Copy constructor.
+	/// </summary>
+	public FieldMetaData(FieldMetaData source)
+	{
+		_enumName				= source._enumName;
+		_shortName				= source._shortName;
+		_longName				= source._longName;
+		_catagory				= source._catagory;
+		_description			= source._description;
+	}
 
-		#region Construction
+	#endregion
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		private FieldMetaData()
+	#region Properties
+
+	/// <summary>
+	/// Name of internal enumeration value.  Used for cross checking, clarification, et cetera.
+	/// </summary>
+	[XmlElement("enumname")]
+	public string EnumName
+	{
+		get
 		{
+			return _enumName;
 		}
 
-		/// <summary>
-		/// Blank constructor.
-		/// </summary>
-		public FieldMetaData(string enumName)
+		set
 		{
-			_enumName = enumName;
+			_enumName = value;
+		}
+	}
+
+	/// <summary>
+	/// Short name to be used in chart legends, et cetera.
+	/// </summary>
+	[XmlElement("shortname")]
+	public string ShortName
+	{
+		get
+		{
+			return _shortName;
 		}
 
-		/// <summary>
-		/// Copy constructor.
-		/// </summary>
-		public FieldMetaData(FieldMetaData source)
+		set
 		{
-			_enumName				= source._enumName;
-			_shortName				= source._shortName;
-			_longName				= source._longName;
-			_catagory				= source._catagory;
-			_description			= source._description;
+			_shortName = value;
+		}
+	}
+
+	/// <summary>
+	/// Long name to be used in chart titles, et cetera.
+	/// </summary>
+	[XmlElement("longname")]
+	public string LongName
+	{
+		get
+		{
+			return _longName;
 		}
 
-		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Name of internal enumeration value.  Used for cross checking, clarification, et cetera.
-		/// </summary>
-		[XmlElement("enumname")]
-		public string EnumName
+		set
 		{
-			get
-			{
-				return _enumName;
-			}
+			_longName = value;
+		}
+	}
 
-			set
-			{
-				_enumName = value;
-			}
+	/// <summary>
+	/// Catagory.
+	/// </summary>
+	[XmlElement("catagory")]
+	public string Catagory
+	{
+		get
+		{
+			return _catagory;
 		}
 
-		/// <summary>
-		/// Short name to be used in chart legends, et cetera.
-		/// </summary>
-		[XmlElement("shortname")]
-		public string ShortName
+		set
 		{
-			get
-			{
-				return _shortName;
-			}
+			_catagory = value;
+		}
+	}
 
-			set
-			{
-				_shortName = value;
-			}
+	/// <summary>
+	/// Description.
+	/// </summary>
+	[XmlElement("description")]
+	public string Description
+	{
+		get
+		{
+			return _description;
 		}
 
-		/// <summary>
-		/// Long name to be used in chart titles, et cetera.
-		/// </summary>
-		[XmlElement("longname")]
-		public string LongName
+		set
 		{
-			get
-			{
-				return _longName;
-			}
-
-			set
-			{
-				_longName = value;
-			}
+			_description = value;
 		}
+	}
 
-		/// <summary>
-		/// Catagory.
-		/// </summary>
-		[XmlElement("catagory")]
-		public string Catagory
-		{
-			get
-			{
-				return _catagory;
-			}
+	#endregion
 
-			set
-			{
-				_catagory = value;
-			}
-		}
+	#region Methods
 
-		/// <summary>
-		/// Description.
-		/// </summary>
-		[XmlElement("description")]
-		public string Description
-		{
-			get
-			{
-				return _description;
-			}
+	#endregion
 
-			set
-			{
-				_description = value;
-			}
-		}
-
-		#endregion
-
-		#region Methods
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

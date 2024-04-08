@@ -1,313 +1,314 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Win32;
+﻿namespace DataConverter;
 
-namespace DataConverter
+/// <summary>
+/// Registry access and setting storage.
+/// </summary>
+public class DataTranslatorWinRegistry
 {
+	#region Members
+
+	#endregion
+
+	#region Construction and Installation
+
 	/// <summary>
-	/// Registry access and setting storage.
+	/// Constructor.
 	/// </summary>
-	public class DataTranslatorWinRegistry
+	/// <param name="owner">Windows form that owns this registry.</param>
+	public DataTranslatorWinRegistry()
 	{
-		#region Members
+	}
 
-		#endregion
+	/// <summary>
+	/// Run the installations of the registry values.
+	/// </summary>
+	private void OnInstall()
+	{
+		string? baseDirectory;
 
-		#region Construction and Installation
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="owner">Windows form that owns this registry.</param>
-		public DataTranslatorWinRegistry()
-		{
-		}
-
-		/// <summary>
-		/// Run the installations of the registry values.
-		/// </summary>
-		private void OnInstall()
-		{
-			string? baseDirectory;
-
-			// If we are debugging the executing assembly is in the bin\debug directory, so we need to move up a couple levels
-			// to get to a location to reference from.  We want to base directory of the project in that case.
+		// If we are debugging the executing assembly is in the bin\debug directory, so we need to move up a couple levels
+		// to get to a location to reference from.  We want to base directory of the project in that case.
 #if DEBUG
 //#if !DEBUG
-			baseDirectory = DigitalProduction.Reflection.Assembly.Path(System.Reflection.Assembly.GetExecutingAssembly());
-			if (baseDirectory != null)
-			{
-				baseDirectory = DigitalProduction.IO.Path.ChangeDirectoryDotDot(baseDirectory, 3);
-			}
-			baseDirectory = System.IO.Path.Combine(baseDirectory??"", "Data Translator\\");
+		baseDirectory = DigitalProduction.Reflection.Assembly.Path(System.Reflection.Assembly.GetExecutingAssembly());
+		if (baseDirectory != null)
+		{
+			baseDirectory = DigitalProduction.IO.Path.ChangeDirectoryDotDot(baseDirectory, 3);
+		}
+		baseDirectory = System.IO.Path.Combine(baseDirectory??"", "Data Translator\\");
 
-			this.TranslationMatrixDirectory		= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
+
+/* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
+Before:
+		this.TranslationMatrixDirectory		= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
+After:
+		TranslationMatrixDirectory      = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
+*/
+		DataTranslatorWinRegistry.TranslationMatrixDirectory     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
 
 /* Unmerged change from project 'Data Translation Maui Library (net8.0-maccatalyst)'
 Before:
-			this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
+		this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
 After:
-			DataTranslatorWinRegistry.UnitsFile                     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
+		DataTranslatorWinRegistry.UnitsFile                     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
 */
 
 /* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
 Before:
-			this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
+		this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
 After:
-			DataTranslatorWinRegistry.UnitsFile                     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
+		DataTranslatorWinRegistry.UnitsFile                     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
 */
-			UnitsFile                       = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
+		UnitsFile                       = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
 
 
 /* Unmerged change from project 'Data Translation Maui Library (net8.0-maccatalyst)'
 Before:
-			this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
+		this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
 After:
-			DataTranslatorWinRegistry.ConfigurationListFile          = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
+		DataTranslatorWinRegistry.ConfigurationListFile          = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
 */
 
 /* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
 Before:
-			this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
+		this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
 After:
-			DataTranslatorWinRegistry.ConfigurationListFile          = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
+		DataTranslatorWinRegistry.ConfigurationListFile          = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
 */
-			ConfigurationListFile           = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
+		ConfigurationListFile           = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
 
 /* Unmerged change from project 'Data Translation Maui Library (net8.0-maccatalyst)'
 Before:
-			this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
+		this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
 After:
-			DataTranslatorWinRegistry.FieldMetaDataFile             = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
+		DataTranslatorWinRegistry.FieldMetaDataFile             = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
 */
 
 /* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
 Before:
-			this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
+		this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
 After:
-			DataTranslatorWinRegistry.FieldMetaDataFile             = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
+		DataTranslatorWinRegistry.FieldMetaDataFile             = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
 */
-			FieldMetaDataFile               = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
+		FieldMetaDataFile               = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
 #else
-			baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-			baseDirectory = System.IO.Path.Combine(baseDirectory, _companyName + "\\");
-			baseDirectory = System.IO.Path.Combine(baseDirectory, _softwareName + "\\");
-				
-			this.TranslationMatrixDirectory		= baseDirectory;
-			this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "Units.xml");
+		baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+		baseDirectory = System.IO.Path.Combine(baseDirectory, _companyName + "\\");
+		baseDirectory = System.IO.Path.Combine(baseDirectory, _softwareName + "\\");
+			
+		this.TranslationMatrixDirectory		= baseDirectory;
+		this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "Units.xml");
 
-			// The folder for the roaming current user.
-			baseDirectory						= Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			baseDirectory						= System.IO.Path.Combine(baseDirectory, _companyName + "\\");
-			baseDirectory						= System.IO.Path.Combine(baseDirectory, _softwareName + "\\");
-			this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "Configuration List.xml");
-			this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "Field Meta Data.xml");
+		// The folder for the roaming current user.
+		baseDirectory						= Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		baseDirectory						= System.IO.Path.Combine(baseDirectory, _companyName + "\\");
+		baseDirectory						= System.IO.Path.Combine(baseDirectory, _softwareName + "\\");
+		this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "Configuration List.xml");
+		this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "Field Meta Data.xml");
 #endif
-		}
+	}
 
-		#endregion
+	#endregion
 
-		#region Registry Keys
+	#region Registry Keys
 
-		/// <summary>
-		/// Return the key that holds the data translator entries.
-		/// </summary>
-		/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
-		protected static string TranslationKey()
+	/// <summary>
+	/// Return the key that holds the data translator entries.
+	/// </summary>
+	/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
+	protected static string TranslationKey()
+	{
+		return "DataTranslation.";
+	}
+
+
+	/// <summary>
+	/// Return the key that holds the options.
+	/// </summary>
+	/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
+	protected static string OptionsKey()
+	{
+		return DataTranslatorWinRegistry.TranslationKey() + "Options.";
+	}
+
+	#endregion
+
+	#region Properties
+
+	/// <summary>
+	/// Translation matrix files default location.
+	/// </summary>
+	public static string TranslationMatrixDirectory
+	{
+		get
 		{
-			return "DataTranslation.";
+			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Translation Matrix Directory", ".\\ProgramData Files");
 		}
 
-
-		/// <summary>
-		/// Return the key that holds the options.
-		/// </summary>
-		/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
-		protected static string OptionsKey()
+		set
 		{
-			return DataTranslatorWinRegistry.TranslationKey() + "Options.";
+			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Translation Matrix Directory", value);
 		}
+	}
 
-		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Translation matrix files default location.
-		/// </summary>
-		public string TranslationMatrixDirectory
+	/// <summary>
+	/// Units file location.
+	/// </summary>
+	public static string UnitsFile
+	{
+		get
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Translation Matrix Directory", ".\\ProgramData Files");
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Translation Matrix Directory", value);
-			}
+			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Units File", ".\\User Files\\Units.xml");
 		}
 
-		/// <summary>
-		/// Units file location.
-		/// </summary>
-		public static string UnitsFile
+		set
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Units File", ".\\User Files\\Units.xml");
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Units File", value);
-			}
+			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Units File", value);
 		}
+	}
 
-		/// <summary>
-		/// Configuration list file location.
-		/// </summary>
-		public static string ConfigurationListFile
+	/// <summary>
+	/// Configuration list file location.
+	/// </summary>
+	public static string ConfigurationListFile
+	{
+		get
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Configuration List File", ".\\User Files\\Configuration List.xml");
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Configuration List File", value);
-			}
+			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Configuration List File", ".\\User Files\\Configuration List.xml");
 		}
 
-		/// <summary>
-		/// Field meta data file location.
-		/// </summary>
-		public static string FieldMetaDataFile
+		set
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Field Meta Data File", ".\\ProgramData Files\\Field Meta Data.xml");
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Field Meta Data File", value);
-			}
+			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Configuration List File", value);
 		}
+	}
 
-		/// <summary>
-		/// Last source of input for a translation or import.
-		/// </summary>
-		public static string LastTranslationInputFile
+	/// <summary>
+	/// Field meta data file location.
+	/// </summary>
+	public static string FieldMetaDataFile
+	{
+		get
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Input File", System.IO.Directory.GetCurrentDirectory());
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Input File", value);
-			}
+			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Field Meta Data File", ".\\ProgramData Files\\Field Meta Data.xml");
 		}
 
-		/// <summary>
-		/// Last source of input for a translation or import.
-		/// </summary>
-		public static string LastTranslationOutputFile
+		set
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Output File", System.IO.Directory.GetCurrentDirectory());
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Output File", value);
-			}
+			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Field Meta Data File", value);
 		}
+	}
 
-		public static bool NumberOfColumnsMustMatchValidation
+	/// <summary>
+	/// Last source of input for a translation or import.
+	/// </summary>
+	public static string LastTranslationInputFile
+	{
+		get
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Number Of Columns Must Match Validation", false);
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Number Of Columns Must Match Validation", value);
-			}
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Input File", System.IO.Directory.GetCurrentDirectory());
 		}
 
-		public static bool DateTimeFormattedCorrectlyValidation
+		set
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Date Time Formatted Correctly", false);
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Date Time Formatted Correctly", value);
-			}
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Input File", value);
 		}
+	}
 
-		public static bool HighPassDateValidation
+	/// <summary>
+	/// Last source of input for a translation or import.
+	/// </summary>
+	public static string LastTranslationOutputFile
+	{
+		get
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date", false);
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date", value);
-			}
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Output File", System.IO.Directory.GetCurrentDirectory());
 		}
 
-		public static DateTime HighPassDateCutOff
+		set
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date Cut Off", System.DateTime.Now);
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date Cut Off", value);
-			}
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Output File", value);
 		}
+	}
 
-		public static bool LowPassDateValidation
+	public static bool NumberOfColumnsMustMatchValidation
+	{
+		get
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date", false);
-			}
-
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date", value);
-			}
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Number Of Columns Must Match Validation", false);
 		}
 
-		public static DateTime LowPassDateCutOff
+		set
 		{
-			get
-			{
-				return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date Cut Off", System.DateTime.Now);
-			}
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Number Of Columns Must Match Validation", value);
+		}
+	}
 
-			set
-			{
-				Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date Cut Off", value);
-			}
+	public static bool DateTimeFormattedCorrectlyValidation
+	{
+		get
+		{
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Date Time Formatted Correctly", false);
 		}
 
-		#endregion
+		set
+		{
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Date Time Formatted Correctly", value);
+		}
+	}
 
-	} // End class.
-} // End namespace.
+	public static bool HighPassDateValidation
+	{
+		get
+		{
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date", false);
+		}
+
+		set
+		{
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date", value);
+		}
+	}
+
+	public static DateTime HighPassDateCutOff
+	{
+		get
+		{
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date Cut Off", System.DateTime.Now);
+		}
+
+		set
+		{
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date Cut Off", value);
+		}
+	}
+
+	public static bool LowPassDateValidation
+	{
+		get
+		{
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date", false);
+		}
+
+		set
+		{
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date", value);
+		}
+	}
+
+	public static DateTime LowPassDateCutOff
+	{
+		get
+		{
+			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date Cut Off", System.DateTime.Now);
+		}
+
+		set
+		{
+			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date Cut Off", value);
+		}
+	}
+
+	#endregion
+
+} // End class.

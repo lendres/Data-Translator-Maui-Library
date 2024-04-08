@@ -1,237 +1,226 @@
 ﻿using DigitalProduction.Reflection;
 using DigitalProduction.XML.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
 
-namespace DataConverter
+namespace DataConverter;
+
+/// <summary>
+/// 
+/// </summary>
+[XmlRoot("configurationlist")]
+public partial class ConfigurationList
 {
+	#region Members
+
+	private List<Configuration>						_configurations				= new();
+	private string									_path						= "";
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// 
+	/// Default constructor.
 	/// </summary>
-	[XmlRoot("configurationlist")]
-	public partial class ConfigurationList
+	public ConfigurationList()
 	{
-		#region Members
+	}
 
-		private List<Configuration>						_configurations				= new();
-		private string									_path						= "";
-
-		#endregion
-
-		#region Construction
-
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public ConfigurationList()
+	/// <summary>
+	/// Constructor.
+	/// </summary>
+	public ConfigurationList(List<Configuration> configurations)
+	{
+		foreach (Configuration configuration in configurations)
 		{
+			_configurations.Add(new Configuration(configuration));
+		}
+	}
+
+	#endregion
+
+	#region Properties
+
+	/// <summary>
+	/// Configurations.
+	/// </summary>
+	[XmlArray("configurations"), XmlArrayItem("configuration")]
+	public List<Configuration> Configurations
+	{
+		get
+		{
+			return _configurations;
 		}
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public ConfigurationList(List<Configuration> configurations)
+		set
 		{
-			foreach (Configuration configuration in configurations)
-			{
-				_configurations.Add(new Configuration(configuration));
-			}
+			_configurations = value;
+		}
+	}
+
+	/// <summary>
+	/// Number of configurations, provided for convenience.
+	/// </summary>
+	[XmlIgnore()]
+	public int NumberOfConfigurations
+	{
+		get
+		{
+			return _configurations.Count;
+		}
+	}
+
+	/// <summary>
+	/// Path the instance was created from.  Used to resave the file later.
+	/// </summary>
+	[XmlIgnore()]
+	public string Path
+	{
+		get
+		{
+			return _path;
 		}
 
-		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Configurations.
-		/// </summary>
-		[XmlArray("configurations"), XmlArrayItem("configuration")]
-		public List<Configuration> Configurations
+		set
 		{
-			get
-			{
-				return _configurations;
-			}
+			_path = value;
+		}
+	}
 
-			set
-			{
-				_configurations = value;
-			}
+	/// <summary>
+	/// Bracket operator.
+	/// </summary>
+	/// <param name="key">Index of required item.</param>
+	[XmlIgnore()]
+	public Configuration this[int index]
+	{
+		get
+		{
+			return _configurations[index];
 		}
 
-		/// <summary>
-		/// Number of configurations, provided for convenience.
-		/// </summary>
-		[XmlIgnore()]
-		public int NumberOfConfigurations
+		set
 		{
-			get
-			{
-				return _configurations.Count;
-			}
+			_configurations[index] = value;
+		}
+	}
+
+	#endregion
+
+	#region Methods
+
+	/// <summary>
+	/// Gets all the names of the Configurations.
+	/// </summary>
+	public string[] GetArrayOfNames()
+	{
+		string[] names = new string[_configurations.Count];
+
+		for (int i = 0; i < _configurations.Count; i++)
+		{
+			names[i] = _configurations[i].Name;
 		}
 
-		/// <summary>
-		/// Path the instance was created from.  Used to resave the file later.
-		/// </summary>
-		[XmlIgnore()]
-		public string Path
-		{
-			get
-			{
-				return _path;
-			}
+		return names;
+	}
 
-			set
-			{
-				_path = value;
-			}
-		}
+	/// <summary>
+	/// Find a Configuration by it's name.
+	/// </summary>
+	/// <param name="name">Name of the Configuration.</param>
+	public Configuration GetConfigurationByName(string name)
+	{
+		Configuration? configuration = _configurations.Find(item => item.Name == name) ??
+			throw new Exception("The Configuration name provided is not valid or not present.");
+		return configuration;
+	}
 
-		/// <summary>
-		/// Bracket operator.
-		/// </summary>
-		/// <param name="key">Index of required item.</param>
-		[XmlIgnore()]
-		public Configuration this[int index]
-		{
-			get
-			{
-				return _configurations[index];
-			}
+	/// <summary>
+	/// Returns a subset of the Configurations based on the filter.
+	/// </summary>
+	/// <param name="filter">Filter (Predicate).</param>
+	private ConfigurationList FilterConfigurations(Func<Configuration, bool> filter)
+	{
+		return new ConfigurationList(_configurations.Where(filter).ToList());
+	}
 
-			set
-			{
-				_configurations[index] = value;
-			}
-		}
+	/// <summary>
+	/// Returns a subset of the Configurations based on a processor type.
+	/// </summary>
+	/// <param name="outputProcessorType"></param>
+	/// <returns></returns>
+	public ConfigurationList FilterByOutputProcessorType(Type outputProcessorType)
+	{
+		ProcessorMetaData? processorMetaData = Attributes.GetAttribute<ProcessorMetaData>(outputProcessorType) ??
+			throw new NullReferenceException("The output processor type did not contain the proper meta data.");
 
-		#endregion
+		return FilterConfigurations(item => item.OutputProcessorName == processorMetaData.Name);
+	}
 
-		#region Methods
+	/// <summary>
+	/// Returns a subset of the Configurations based on the location of the data the read/write.
+	/// </summary>
+	/// <param name="dataLocation">Data location.</param>
+	public ConfigurationList FilterBothProcessorsByDataLocation(DataLocation dataLocation)
+	{
+		return FilterByInputProcessorDataLocation(dataLocation).FilterByOutputProcessorDataLocation(dataLocation);
+	}
 
-		/// <summary>
-		/// Gets all the names of the Configurations.
-		/// </summary>
-		public string[] GetArrayOfNames()
-		{
-			string[] names = new string[_configurations.Count];
+	/// <summary>
+	/// Returns a subset of the Configurations based on the location of the data the read/write.
+	/// </summary>
+	/// <param name="dataLocation">Data location.</param>
+	public ConfigurationList FilterByInputProcessorDataLocation(DataLocation dataLocation)
+	{
+		return FilterConfigurations(item => ProcessorObjectFactory.GetProcessorMetaDataFromName(item.InputProcessorName).DataLocation == dataLocation);
+	}
 
-			for (int i = 0; i < _configurations.Count; i++)
-			{
-				names[i] = _configurations[i].Name;
-			}
+	/// <summary>
+	/// Returns a subset of the Configurations based on the location of the data the read/write.
+	/// </summary>
+	/// <param name="dataLocation">Data location.</param>
+	public ConfigurationList FilterByOutputProcessorDataLocation(DataLocation dataLocation)
+	{
+		return FilterConfigurations(item => ProcessorObjectFactory.GetProcessorMetaDataFromName(item.OutputProcessorName).DataLocation == dataLocation);
+	}
 
-			return names;
-		}
+	#endregion
 
-		/// <summary>
-		/// Find a Configuration by it's name.
-		/// </summary>
-		/// <param name="name">Name of the Configuration.</param>
-		public Configuration GetConfigurationByName(string name)
-		{
-			Configuration? configuration = _configurations.Find(item => item.Name == name);
-			if (configuration == null)
-			{
-				throw new Exception("The Configuration name provided is not valid or not present.");
-			}
-			return configuration;
-		}
+	#region XML
 
-		/// <summary>
-		/// Returns a subset of the Configurations based on the filter.
-		/// </summary>
-		/// <param name="filter">Filter (Predicate).</param>
-		private ConfigurationList FilterConfigurations(Func<Configuration, bool> filter)
-		{
-			return new ConfigurationList(_configurations.Where(filter).ToList());
-		}
+	/// <summary>
+	/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
+	/// </summary>
+	public void Serialize()
+	{
+		SerializationSettings settings				= new(this, _path);
+		settings.XmlSettings.NewLineOnAttributes	= false;
+		Serialization.SerializeObject(settings);
+	}
 
-		/// <summary>
-		/// Returns a subset of the Configurations based on a processor type.
-		/// </summary>
-		/// <param name="outputProcessorType"></param>
-		/// <returns></returns>
-		public ConfigurationList FilterByOutputProcessorType(Type outputProcessorType)
-		{
-			ProcessorMetaData processorMetaData = Attributes.GetAttribute<ProcessorMetaData>(outputProcessorType);
+	/// <summary>
+	/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
+	/// </summary>
+	public void Serialize(string path)
+	{
+		_path = path;
+		Serialize();
+	}
 
-			return FilterConfigurations(item => item.OutputProcessorName == processorMetaData.Name);
-		}
+	/// <summary>
+	/// Create an instance from a file.
+	/// </summary>
+	/// <param name="path">The file to read from.</param>
+	/// <returns>The deserialized file types.</returns>
+	public static ConfigurationList Deserialize(string path)
+	{
+		ConfigurationList? configurationList = Serialization.DeserializeObject<ConfigurationList>(path) ??
+			throw new Exception("Unable to deserialize the configuraiton list.");
 
-		/// <summary>
-		/// Returns a subset of the Configurations based on the location of the data the read/write.
-		/// </summary>
-		/// <param name="dataLocation">Data location.</param>
-		public ConfigurationList FilterBothProcessorsByDataLocation(DataLocation dataLocation)
-		{
-			return FilterByInputProcessorDataLocation(dataLocation).FilterByOutputProcessorDataLocation(dataLocation);
-		}
+		configurationList.Path              = path;
+		return configurationList;
+	}
 
-		/// <summary>
-		/// Returns a subset of the Configurations based on the location of the data the read/write.
-		/// </summary>
-		/// <param name="dataLocation">Data location.</param>
-		public ConfigurationList FilterByInputProcessorDataLocation(DataLocation dataLocation)
-		{
-			return FilterConfigurations(item => ProcessorObjectFactory.GetProcessorMetaDataFromName(item.InputProcessorName).DataLocation == dataLocation);
-		}
+	#endregion
 
-		/// <summary>
-		/// Returns a subset of the Configurations based on the location of the data the read/write.
-		/// </summary>
-		/// <param name="dataLocation">Data location.</param>
-		public ConfigurationList FilterByOutputProcessorDataLocation(DataLocation dataLocation)
-		{
-			return FilterConfigurations(item => ProcessorObjectFactory.GetProcessorMetaDataFromName(item.OutputProcessorName).DataLocation == dataLocation);
-		}
-
-
-
-		#endregion
-
-		#region XML
-
-		/// <summary>
-		/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
-		/// </summary>
-		public void Serialize()
-		{
-			SerializationSettings settings				= new(this, _path);
-			settings.XmlSettings.NewLineOnAttributes	= false;
-			Serialization.SerializeObject(settings);
-		}
-
-		/// <summary>
-		/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
-		/// </summary>
-		public void Serialize(string path)
-		{
-			_path = path;
-			Serialize();
-		}
-
-		/// <summary>
-		/// Create an instance from a file.
-		/// </summary>
-		/// <param name="path">The file to read from.</param>
-		/// <returns>The deserialized file types.</returns>
-		public static ConfigurationList Deserialize(string path)
-		{
-			ConfigurationList? configurationList = Serialization.DeserializeObject<ConfigurationList>(path);
-			if (configurationList == null)
-			{
-				throw new Exception("Unable to deserialize the configuraiton list.");
-			}
-
-			configurationList.Path              = path;
-			return configurationList;
-		}
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.

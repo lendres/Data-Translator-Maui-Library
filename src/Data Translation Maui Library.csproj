@@ -29,9 +29,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="Thor.Units">
-	    <HintPath>..\..\Data-Translator-Maui-Library\References\Thor.Units.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Thor.Units.Maui">
 	    <HintPath>..\References\Thor.Units.Maui.dll</HintPath>
 	  </Reference>

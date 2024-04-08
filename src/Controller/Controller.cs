@@ -1,128 +1,138 @@
-﻿using System.Collections.Generic;
+﻿namespace DataConverter;
 
-namespace DataConverter
+/// <summary>
+/// 
+/// </summary>
+public class Controller
 {
+	#region Members
+
+	private InputProcessor?					_inputProcessor;
+	private Validator?						_validator;
+	private Translator?						_translator;
+	private OutputProcessor?					_outputProcessor;
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// 
+	/// Constructor.
 	/// </summary>
-	public class Controller
+	public Controller()
 	{
-		#region Members
+	}
 
-		private InputProcessor?					_inputProcessor;
-		private Validator?						_validator;
-		private Translator?						_translator;
-		private OutputProcessor?					_outputProcessor;
+	#endregion
 
-		#endregion
+	#region Properties
 
-		#region Construction
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public Controller()
+	/// <summary>
+	/// InputProcessor.
+	/// </summary>
+	public InputProcessor? InputProcessor
+	{
+		get
 		{
+			return _inputProcessor;
+		}
+	}
+
+	/// <summary>
+	/// Validator.
+	/// </summary>
+	public Validator? Validator
+	{
+		get
+		{
+			return _validator;
+		}
+	}
+
+	/// <summary>
+	/// OutputProcessor.
+	/// </summary>
+	public OutputProcessor? OutputProcessor
+	{
+		get
+		{
+			return _outputProcessor;
+		}
+	}
+
+	#endregion
+
+	#region Methods
+
+	public void TranslateData(Configuration configuration, string inputFile, string outputFile, List<ValidationCheck> validationChecks)
+	{
+		// Control flow is:
+		// Input -> Validate -> Translation -> Output.
+		ConstructInstances(configuration);
+
+		SetupTranslation(validationChecks);
+
+		RunTranslation(inputFile, outputFile);
+	}
+
+	private void ConstructInstances(Configuration configuration)
+	{
+		// Control flow is:
+		// Input -> Validate -> Translation -> Output.
+		_inputProcessor			= ProcessorObjectFactory.CreateInputProcessor(configuration.InputProcessorName);
+		_validator				= new Validator();
+		_translator				= new Translator(System.IO.Path.Combine(DataTranslatorWinRegistry.TranslationMatrixDirectory, configuration.TranslationMatrixFile));
+		_outputProcessor		= ProcessorObjectFactory.CreateOutputProcessor(configuration.OutputProcessorName);
+	}
+
+	private void SetupTranslation(List<ValidationCheck> validationChecks)
+	{
+		if (_inputProcessor == null)
+		{
+			throw new NullReferenceException("The input processor is null.");
+		}
+		if (_validator == null)
+		{
+			throw new NullReferenceException("The validator is null.");
+		}
+		if (_translator == null)
+		{
+			throw new NullReferenceException("The translator is null.");
 		}
 
-		#endregion
+		// Setup.
+		// Control flow is:
+		// Input -> Validate -> Translation -> Output.
+		_inputProcessor.Validator		= _validator;
 
-		#region Properties
+		_validator.Translator			= _translator;
+		_validator.AddValidationChecks(validationChecks);
 
-		/// <summary>
-		/// InputProcessor.
-		/// </summary>
-		public InputProcessor? InputProcessor
+		_translator.OutputProcessor		= _outputProcessor;
+	}
+
+	private void RunTranslation(string inputFile, string outputFile)
+	{
+		if (_outputProcessor == null)
 		{
-			get
-			{
-				return _inputProcessor;
-			}
+			throw new NullReferenceException("The output processor is null.");				
 		}
 
-		/// <summary>
-		/// Validator.
-		/// </summary>
-		public Validator? Validator
+		if (_inputProcessor == null)
 		{
-			get
-			{
-				return _validator;
-			}
+			throw new NullReferenceException("The input processor is null.");
 		}
 
-		/// <summary>
-		/// OutputProcessor.
-		/// </summary>
-		public OutputProcessor? OutputProcessor
-		{
-			get
-			{
-				return _outputProcessor;
-			}
-		}
+		// Processing.
+		_outputProcessor.Open(outputFile);
+		_inputProcessor.Open(inputFile);
 
-		#endregion
+		_inputProcessor.Process();
 
-		#region Methods
+		_inputProcessor.Close();
+		_outputProcessor.Close();
+	}
 
-		public void TranslateData(Configuration configuration, string inputFile, string outputFile, List<ValidationCheck> validationChecks)
-		{
-			// Control flow is:
-			// Input -> Validate -> Translation -> Output.
-			ConstructInstances(configuration);
+	#endregion
 
-			SetupTranslation(validationChecks);
-
-			RunTranslation(inputFile, outputFile);
-		}
-
-		private void ConstructInstances(Configuration configuration)
-		{
-			// Control flow is:
-			// Input -> Validate -> Translation -> Output.
-			_inputProcessor			= ProcessorObjectFactory.CreateInputProcessor(configuration.InputProcessorName);
-			_validator				= new Validator();
-			_translator				= new Translator(System.IO.Path.Combine(Interface.Registry.TranslationMatrixDirectory, configuration.TranslationMatrixFile));
-			_outputProcessor		= ProcessorObjectFactory.CreateOutputProcessor(configuration.OutputProcessorName);
-		}
-
-		private void SetupTranslation(List<ValidationCheck> validationChecks)
-		{
-			// Setup.
-			// Control flow is:
-			// Input -> Validate -> Translation -> Output.
-			_inputProcessor.Validator		= _validator;
-
-			_validator.Translator			= _translator;
-			_validator.AddValidationChecks(validationChecks);
-
-			_translator.OutputProcessor		= _outputProcessor;
-		}
-
-		private void RunTranslation(string inputFile, string outputFile)
-		{
-			if (_outputProcessor == null)
-			{
-				throw new NullReferenceException("The output processor is null.");				
-			}
-
-			if (_inputProcessor == null)
-			{
-				throw new NullReferenceException("The input processor is null.");
-			}
-
-			// Processing.
-			_outputProcessor.Open(outputFile);
-			_inputProcessor.Open(inputFile);
-
-			_inputProcessor.Process();
-
-			_inputProcessor.Close();
-			_outputProcessor.Close();
-		}
-
-		#endregion
-
-	} // End class.
-} // End namespace.
+} // End class.
