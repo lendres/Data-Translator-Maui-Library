@@ -29,7 +29,6 @@ public class DataTranslatorWinRegistry
 		// If we are debugging the executing assembly is in the bin\debug directory, so we need to move up a couple levels
 		// to get to a location to reference from.  We want to base directory of the project in that case.
 #if DEBUG
-//#if !DEBUG
 		baseDirectory = DigitalProduction.Reflection.Assembly.Path(System.Reflection.Assembly.GetExecutingAssembly());
 		if (baseDirectory != null)
 		{
@@ -37,60 +36,10 @@ public class DataTranslatorWinRegistry
 		}
 		baseDirectory = System.IO.Path.Combine(baseDirectory??"", "Data Translator\\");
 
-
-/* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
-Before:
-		this.TranslationMatrixDirectory		= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
-After:
-		TranslationMatrixDirectory      = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
-*/
-		DataTranslatorWinRegistry.TranslationMatrixDirectory     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
-
-/* Unmerged change from project 'Data Translation Maui Library (net8.0-maccatalyst)'
-Before:
-		this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
-After:
-		DataTranslatorWinRegistry.UnitsFile                     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
-*/
-
-/* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
-Before:
-		this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
-After:
-		DataTranslatorWinRegistry.UnitsFile                     = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
-*/
-		UnitsFile                       = System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
-
-
-/* Unmerged change from project 'Data Translation Maui Library (net8.0-maccatalyst)'
-Before:
-		this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
-After:
-		DataTranslatorWinRegistry.ConfigurationListFile          = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
-*/
-
-/* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
-Before:
-		this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
-After:
-		DataTranslatorWinRegistry.ConfigurationListFile          = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
-*/
-		ConfigurationListFile           = System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
-
-/* Unmerged change from project 'Data Translation Maui Library (net8.0-maccatalyst)'
-Before:
-		this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
-After:
-		DataTranslatorWinRegistry.FieldMetaDataFile             = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
-*/
-
-/* Unmerged change from project 'Data Translation Maui Library (net8.0-windows10.0.19041.0)'
-Before:
-		this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
-After:
-		DataTranslatorWinRegistry.FieldMetaDataFile             = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
-*/
-		FieldMetaDataFile               = System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
+		DataTranslatorWinRegistry.TranslationMatrixDirectory	= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
+		DataTranslatorWinRegistry.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
+		DataTranslatorWinRegistry.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
+		DataTranslatorWinRegistry.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
 #else
 		baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 		baseDirectory = System.IO.Path.Combine(baseDirectory, _companyName + "\\");
