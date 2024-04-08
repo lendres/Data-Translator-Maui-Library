@@ -7,7 +7,7 @@
 	{
 		#region Members
 
-		private string					_openLocation;
+		private string					_openLocation		= "";
 
 		#endregion
 

@@ -65,7 +65,7 @@ namespace DataConverter
 			{
 				_converter			= (Thor.Units.UnitConverter)Thor.Units.InterfaceFactory.CreateUnitConverter();
 				_converter.OnError	+= new Thor.Units.UnitEventHandler(Converter_OnError);
-				_converter.LoadUnitsFile(Interface.Registry.UnitsFile);
+				_converter.LoadUnitsFile(DataTranslatorWinRegistry.UnitsFile);
 			}
 		}
 

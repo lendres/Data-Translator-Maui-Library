@@ -10,10 +10,10 @@ namespace DataConverter
 	{
 		#region Members
 
-		private string				_name;
-		private DataLocation		_dataLocation;
-		private string				_filterString;
-		private string				_description;
+		private string				_name					= "";
+		private DataLocation		_dataLocation			= DataLocation.Length;
+		private string				_filterString			= "";
+		private string				_description			= "";
 
 		#endregion
 

@@ -10,7 +10,7 @@ namespace DataConverter
 	{
 		#region Members
 
-		private string								_name;
+		private string								_name						= "";
 
 		private List<string>						_columnHeaders				= new();
 		private List<string>                        _units						= new();

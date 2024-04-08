@@ -15,7 +15,7 @@ namespace DataConverter
 	{
 		#region Members
 
-		private List<Configuration>						_configurations				= new List<Configuration>();
+		private List<Configuration>						_configurations				= new();
 		private string									_path						= "";
 
 		#endregion
@@ -133,7 +133,7 @@ namespace DataConverter
 		/// <param name="name">Name of the Configuration.</param>
 		public Configuration GetConfigurationByName(string name)
 		{
-			Configuration configuration = _configurations.Find(item => item.Name == name);
+			Configuration? configuration = _configurations.Find(item => item.Name == name);
 			if (configuration == null)
 			{
 				throw new Exception("The Configuration name provided is not valid or not present.");
@@ -200,7 +200,7 @@ namespace DataConverter
 		/// </summary>
 		public void Serialize()
 		{
-			SerializationSettings settings				= new SerializationSettings(this, _path);
+			SerializationSettings settings				= new(this, _path);
 			settings.XmlSettings.NewLineOnAttributes	= false;
 			Serialization.SerializeObject(settings);
 		}

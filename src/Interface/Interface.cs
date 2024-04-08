@@ -29,7 +29,7 @@ public class Interface
 	//		private List<ValidationCheck>						_validationChecks;
 	//		private DisplayMessageDelegate						_displayMessageDelegate;
 
-	private static DataTranslatorWinRegistry            _registry;
+	private static DataTranslatorWinRegistry            _registry		= new();
 
 	#endregion
 
@@ -40,7 +40,6 @@ public class Interface
 	/// </summary>
 	public Interface()
 	{
-		_registry                   = new DataTranslatorWinRegistry();
 	}
 
 	#endregion

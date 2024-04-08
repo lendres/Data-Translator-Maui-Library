@@ -41,8 +41,7 @@ namespace DataConverter
 
 				for (int i = 0; i < length; i++)
 				{
-					string? name	= values.GetValue(i)?.ToString();
-					name			= name == null ? "" : name;
+					string name	= values.GetValue(i)?.ToString() ?? "";
 					_fieldMetaData.Add(new FieldMetaData(name));
 				}
 			}
@@ -106,7 +105,7 @@ namespace DataConverter
 		public List<FieldMetaData> CloneFieldMetaData()
 		{
 			int numberOfEntries					= _fieldMetaData.Count;
-			List<FieldMetaData> fieldMetaData	= new List<FieldMetaData>(numberOfEntries);
+			List<FieldMetaData> fieldMetaData	= new(numberOfEntries);
 			
 			for (int i = 0; i < numberOfEntries; i++)
 			{
@@ -125,7 +124,7 @@ namespace DataConverter
 		/// </summary>
 		public void Serialize()
 		{
-			SerializationSettings settings				= new SerializationSettings(this, _path);
+			SerializationSettings settings				= new(this, _path);
 			settings.XmlSettings.NewLineOnAttributes	= false;
 			Serialization.SerializeObject(settings);
 		}

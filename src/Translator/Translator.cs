@@ -210,7 +210,7 @@ public partial class Translator
 	/// <param name="path">Path to write the file to.</param>
 	public static void WriteInitialFieldMetaDataFile(string path)
 	{
-		FieldMetaDataContainer container = new FieldMetaDataContainer(true);
+		FieldMetaDataContainer container = new(true);
 		container.Serialize(path);
 	}
 
