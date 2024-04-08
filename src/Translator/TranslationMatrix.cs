@@ -9,7 +9,7 @@ namespace DataConverter
 	/// Contains the data used to convert the metadata in files to known internal data types.
 	/// </summary>
 	[XmlRoot("translationmatrix")]
-	public class TranslationMatrix
+	public partial class TranslationMatrix
 	{
 		#region Enumerations
 
@@ -154,19 +154,6 @@ namespace DataConverter
 		#region XML
 
 		/// <summary>
-		/// Create an instance from a file.
-		/// </summary>
-		/// <param name="path">The file to read from.</param>
-		/// <param name="savePath">If true, the path is store so the instance can be re-serialized to the same location.</param>
-		/// <returns>The deserialized file types.</returns>
-		public static TranslationMatrix Deserialize(string path, bool savePath = true)
-		{
-			TranslationMatrix translationMatrix	= Serialization.DeserializeObject<TranslationMatrix>(path);
-			translationMatrix.Path				= path;
-			return translationMatrix;
-		}
-
-		/// <summary>
 		/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
 		/// </summary>
 		public void Serialize()
@@ -183,6 +170,24 @@ namespace DataConverter
 		{
 			_path = path;
 			Serialize();
+		}
+
+		/// <summary>
+		/// Create an instance from a file.
+		/// </summary>
+		/// <param name="path">The file to read from.</param>
+		/// <param name="savePath">If true, the path is store so the instance can be re-serialized to the same location.</param>
+		/// <returns>The deserialized file types.</returns>
+		public static TranslationMatrix Deserialize(string path, bool savePath = true)
+		{
+			TranslationMatrix? translationMatrix = Serialization.DeserializeObject<TranslationMatrix>(path);
+			if (translationMatrix == null)
+			{
+				throw new Exception("Unable to deserialize the translation matrix.");
+			}
+
+			translationMatrix.Path              = path;
+			return translationMatrix;
 		}
 
 		#endregion

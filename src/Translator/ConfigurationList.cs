@@ -11,7 +11,7 @@ namespace DataConverter
 	/// 
 	/// </summary>
 	[XmlRoot("configurationlist")]
-	public class ConfigurationList
+	public partial class ConfigurationList
 	{
 		#region Members
 
@@ -196,18 +196,6 @@ namespace DataConverter
 		#region XML
 
 		/// <summary>
-		/// Create an instance from a file.
-		/// </summary>
-		/// <param name="path">The file to read from.</param>
-		/// <returns>The deserialized file types.</returns>
-		public static ConfigurationList Deserialize(string path)
-		{
-			ConfigurationList configurationList	= Serialization.DeserializeObject<ConfigurationList>(path);
-			configurationList.Path				= path;
-			return configurationList;
-		}
-
-		/// <summary>
 		/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
 		/// </summary>
 		public void Serialize()
@@ -224,6 +212,23 @@ namespace DataConverter
 		{
 			_path = path;
 			Serialize();
+		}
+
+		/// <summary>
+		/// Create an instance from a file.
+		/// </summary>
+		/// <param name="path">The file to read from.</param>
+		/// <returns>The deserialized file types.</returns>
+		public static ConfigurationList Deserialize(string path)
+		{
+			ConfigurationList? configurationList = Serialization.DeserializeObject<ConfigurationList>(path);
+			if (configurationList == null)
+			{
+				throw new Exception("Unable to deserialize the configuraiton list.");
+			}
+
+			configurationList.Path              = path;
+			return configurationList;
 		}
 
 		#endregion

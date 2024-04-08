@@ -12,18 +12,12 @@ namespace DataConverter
 
 		private string								_name;
 
-		private List<string>						_columnHeaders;
-		private List<string>						_units;
-		private List<Field>							_fields;
-		private List<DataType>						_dataTypes;
+		private List<string>						_columnHeaders				= new();
+		private List<string>                        _units						= new();
+		private List<Field>                         _fields						= new();
+		private List<DataType>                      _dataTypes					= new();
 
 		private Field								_independentAxisField		= Field.Depth;
-
-		// We need to provide a value to initialize the size of the Lists (only because our function calls for it).
-		// Also, the "default" (default but not documented, therefore not required) size is either 0 or 4 (depending on who you ask)
-		// so we want to create slightly larger list sizes anyway as our Lists will be bigger, typically.  Not really much efficiency
-		// gain, but its convenient to use with our function anyway.
-		private static int							_initialListSize			= 20;
 
 		#endregion
 
@@ -34,7 +28,6 @@ namespace DataConverter
 		/// </summary>
 		private TableTranslationMetaData()
 		{
-			InitializeLists(_initialListSize);
 		}
 
 		/// <summary>
@@ -43,7 +36,6 @@ namespace DataConverter
 		public TableTranslationMetaData(string name)
 		{
 			_name	= name;
-			InitializeLists(_initialListSize);
 		}
 
 		/// <summary>
@@ -53,7 +45,6 @@ namespace DataConverter
 			base(number)
 		{
 			_name	= name;
-			InitializeLists(_initialListSize);
 		}
 
 		/// <summary>
@@ -63,7 +54,6 @@ namespace DataConverter
 			base(number)
 		{
 			_name	= name;
-			InitializeLists(columnHeaders.Count);
 
 			// We might modify the column headers so we need to copy them here to make sure we don't modify the originals.
 			_columnHeaders = columnHeaders.ToList();
@@ -76,23 +66,10 @@ namespace DataConverter
 			base(number)
 		{
 			_name	= name;
-			InitializeLists(columnHeaders.Count);
 
 			// We might modify the column headers so we need to copy them here to make sure we don't modify the originals.
-			_columnHeaders = columnHeaders.ToList();
-			_independentAxisField = independentAxisField;
-		}
-
-		/// <summary>
-		/// Creates the List instances and sizes them to an initial size.
-		/// </summary>
-		/// <param name="initialSize">Size of the Lists.</param>
-		private void InitializeLists(int initialSize)
-		{
-			_columnHeaders	= new List<string>(initialSize);
-			_units			= new List<string>(initialSize);
-			_fields			= new List<Field>(initialSize);
-			_dataTypes		= new List<DataType>(initialSize);
+			_columnHeaders			= columnHeaders.ToList();
+			_independentAxisField	= independentAxisField;
 		}
 
 		#endregion

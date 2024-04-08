@@ -9,10 +9,10 @@ namespace DataConverter
 	{
 		#region Members
 
-		private InputProcessor					_inputProcessor;
-		private Validator						_validator;
-		private Translator						_translator;
-		private OutputProcessor					_outputProcessor;
+		private InputProcessor?					_inputProcessor;
+		private Validator?						_validator;
+		private Translator?						_translator;
+		private OutputProcessor?					_outputProcessor;
 
 		#endregion
 
@@ -32,7 +32,7 @@ namespace DataConverter
 		/// <summary>
 		/// InputProcessor.
 		/// </summary>
-		public InputProcessor InputProcessor
+		public InputProcessor? InputProcessor
 		{
 			get
 			{
@@ -43,7 +43,7 @@ namespace DataConverter
 		/// <summary>
 		/// Validator.
 		/// </summary>
-		public Validator Validator
+		public Validator? Validator
 		{
 			get
 			{
@@ -54,7 +54,7 @@ namespace DataConverter
 		/// <summary>
 		/// OutputProcessor.
 		/// </summary>
-		public OutputProcessor OutputProcessor
+		public OutputProcessor? OutputProcessor
 		{
 			get
 			{
@@ -102,6 +102,16 @@ namespace DataConverter
 
 		private void RunTranslation(string inputFile, string outputFile)
 		{
+			if (_outputProcessor == null)
+			{
+				throw new NullReferenceException("The output processor is null.");				
+			}
+
+			if (_inputProcessor == null)
+			{
+				throw new NullReferenceException("The input processor is null.");
+			}
+
 			// Processing.
 			_outputProcessor.Open(outputFile);
 			_inputProcessor.Open(inputFile);
