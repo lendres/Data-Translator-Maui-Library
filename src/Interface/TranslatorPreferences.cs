@@ -3,7 +3,7 @@
 /// <summary>
 /// Registry access and setting storage.
 /// </summary>
-public class DataTranslatorWinRegistry
+public class TranslatorPreferences
 {
 	#region Members
 
@@ -15,7 +15,7 @@ public class DataTranslatorWinRegistry
 	/// Constructor.
 	/// </summary>
 	/// <param name="owner">Windows form that owns this registry.</param>
-	public DataTranslatorWinRegistry()
+	public TranslatorPreferences()
 	{
 	}
 
@@ -36,10 +36,10 @@ public class DataTranslatorWinRegistry
 		}
 		baseDirectory = System.IO.Path.Combine(baseDirectory??"", "Data Translator\\");
 
-		DataTranslatorWinRegistry.TranslationMatrixDirectory	= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
-		DataTranslatorWinRegistry.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
-		DataTranslatorWinRegistry.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
-		DataTranslatorWinRegistry.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
+		TranslatorPreferences.TranslationMatrixDirectory	= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
+		TranslatorPreferences.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
+		TranslatorPreferences.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
+		TranslatorPreferences.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
 #else
 		baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 		baseDirectory = System.IO.Path.Combine(baseDirectory, _companyName + "\\");
@@ -77,7 +77,7 @@ public class DataTranslatorWinRegistry
 	/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
 	protected static string OptionsKey()
 	{
-		return DataTranslatorWinRegistry.TranslationKey() + "Options.";
+		return TranslationKey() + "Options.";
 	}
 
 	#endregion
@@ -91,12 +91,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Translation Matrix Directory", ".\\ProgramData Files");
+			return Preferences.Default.Get(OptionsKey()+"Translation Matrix Directory", ".\\ProgramData Files");
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Translation Matrix Directory", value);
+			Preferences.Default.Set(OptionsKey()+"Translation Matrix Directory", value);
 		}
 	}
 
@@ -107,12 +107,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Units File", ".\\User Files\\Units.xml");
+			return Preferences.Default.Get(OptionsKey()+"Units File", ".\\User Files\\Units.xml");
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Units File", value);
+			Preferences.Default.Set(OptionsKey()+"Units File", value);
 		}
 	}
 
@@ -123,12 +123,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Configuration List File", ".\\User Files\\Configuration List.xml");
+			return Preferences.Default.Get(OptionsKey()+"Configuration List File", ".\\User Files\\Configuration List.xml");
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Configuration List File", value);
+			Preferences.Default.Set(OptionsKey()+"Configuration List File", value);
 		}
 	}
 
@@ -139,12 +139,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.OptionsKey()+"Field Meta Data File", ".\\ProgramData Files\\Field Meta Data.xml");
+			return Preferences.Default.Get(OptionsKey()+"Field Meta Data File", ".\\ProgramData Files\\Field Meta Data.xml");
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.OptionsKey()+"Field Meta Data File", value);
+			Preferences.Default.Set(OptionsKey()+"Field Meta Data File", value);
 		}
 	}
 
@@ -155,12 +155,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Input File", System.IO.Directory.GetCurrentDirectory());
+			return Preferences.Default.Get(TranslationKey()+"Last Translation Input File", System.IO.Directory.GetCurrentDirectory());
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Input File", value);
+			Preferences.Default.Set(TranslationKey()+"Last Translation Input File", value);
 		}
 	}
 
@@ -171,12 +171,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Output File", System.IO.Directory.GetCurrentDirectory());
+			return Preferences.Default.Get(TranslationKey()+"Last Translation Output File", System.IO.Directory.GetCurrentDirectory());
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Last Translation Output File", value);
+			Preferences.Default.Set(TranslationKey()+"Last Translation Output File", value);
 		}
 	}
 
@@ -184,12 +184,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Number Of Columns Must Match Validation", false);
+			return Preferences.Default.Get(TranslationKey()+"Number Of Columns Must Match Validation", false);
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Number Of Columns Must Match Validation", value);
+			Preferences.Default.Set(TranslationKey()+"Number Of Columns Must Match Validation", value);
 		}
 	}
 
@@ -197,12 +197,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Date Time Formatted Correctly", false);
+			return Preferences.Default.Get(TranslationKey()+"Date Time Formatted Correctly", false);
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Date Time Formatted Correctly", value);
+			Preferences.Default.Set(TranslationKey()+"Date Time Formatted Correctly", value);
 		}
 	}
 
@@ -210,12 +210,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date", false);
+			return Preferences.Default.Get(TranslationKey()+"High Pass Date", false);
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date", value);
+			Preferences.Default.Set(TranslationKey()+"High Pass Date", value);
 		}
 	}
 
@@ -223,12 +223,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date Cut Off", System.DateTime.Now);
+			return Preferences.Default.Get(TranslationKey()+"High Pass Date Cut Off", System.DateTime.Now);
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"High Pass Date Cut Off", value);
+			Preferences.Default.Set(TranslationKey()+"High Pass Date Cut Off", value);
 		}
 	}
 
@@ -236,12 +236,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date", false);
+			return Preferences.Default.Get(TranslationKey()+"Low Pass Date", false);
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date", value);
+			Preferences.Default.Set(TranslationKey()+"Low Pass Date", value);
 		}
 	}
 
@@ -249,12 +249,12 @@ public class DataTranslatorWinRegistry
 	{
 		get
 		{
-			return Preferences.Default.Get(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date Cut Off", System.DateTime.Now);
+			return Preferences.Default.Get(TranslationKey()+"Low Pass Date Cut Off", System.DateTime.Now);
 		}
 
 		set
 		{
-			Preferences.Default.Set(DataTranslatorWinRegistry.TranslationKey()+"Low Pass Date Cut Off", value);
+			Preferences.Default.Set(TranslationKey()+"Low Pass Date Cut Off", value);
 		}
 	}
 

@@ -64,7 +64,7 @@ public class UnitsConverter
 		{
 			_converter			= (Thor.Units.UnitConverter)Thor.Units.InterfaceFactory.CreateUnitConverter();
 			_converter.OnError	+= new Thor.Units.UnitEventHandler(Converter_OnError);
-			_converter.LoadUnitsFile(DataTranslatorWinRegistry.UnitsFile);
+			_converter.LoadUnitsFile(TranslatorPreferences.UnitsFile);
 		}
 	}
 
