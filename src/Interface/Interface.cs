@@ -29,7 +29,7 @@ public class Interface
 	//		private List<ValidationCheck>						_validationChecks;
 	//		private DisplayMessageDelegate						_displayMessageDelegate;
 
-	//		private static TranslatorPreferences            _registry		= new();
+	private static TranslatorPreferences            _registry		= new();
 
 	#endregion
 
@@ -65,7 +65,18 @@ public class Interface
 	/// <summary>
 	/// Registry access.
 	/// </summary>
+	public static TranslatorPreferences Registry
+	{
+		get
+		{
+			return _registry;
+		}
 
+		set
+		{
+			_registry = value;
+		}
+	}
 
 	#endregion
 
@@ -73,17 +84,13 @@ public class Interface
 
 	//		#region Import and Translation
 
-			public void Initialize()
-			{
-				// Create an instance from the file.
-				ConfigurationList configurationList = ConfigurationList.Deserialize(TranslatorPreferences.Instance.ConfigurationListFile);
-			}
-
 	//		/// <summary>
 	//		/// Run the UI and work to do a translation.  A turnkey solution.
 	//		/// </summary>
 	//		public void TranslateData()
 	//		{
+	//			// Create an instance from the file.
+	//			ConfigurationList configurationList	= ConfigurationList.Deserialize(Interface.Registry.ConfigurationListFile);
 
 	//			// For translations, we only want processors that operate on data from the disk.
 	//			configurationList = configurationList.FilterBothProcessorsByDataLocation(DataLocation.Disk);

@@ -81,7 +81,7 @@ public class Controller
 		// Input -> Validate -> Translation -> Output.
 		_inputProcessor			= ProcessorObjectFactory.CreateInputProcessor(configuration.InputProcessorName);
 		_validator				= new Validator();
-		_translator				= new Translator(System.IO.Path.Combine(TranslatorPreferences.Instance.TranslationMatrixDirectory, configuration.TranslationMatrixFile));
+		_translator				= new Translator(System.IO.Path.Combine(TranslatorPreferences.TranslationMatrixDirectory, configuration.TranslationMatrixFile));
 		_outputProcessor		= ProcessorObjectFactory.CreateOutputProcessor(configuration.OutputProcessorName);
 	}
 
