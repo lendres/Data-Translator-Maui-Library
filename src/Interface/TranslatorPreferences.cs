@@ -1,11 +1,18 @@
-﻿namespace DataConverter;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace DataConverter;
 
 /// <summary>
 /// Registry access and setting storage.
 /// </summary>
-public class TranslatorPreferences
+public class TranslatorPreferences : INotifyPropertyChanged
 {
 	#region Members
+
+	private static readonly		TranslatorPreferences			_instance = new TranslatorPreferences();
+
+	public event				PropertyChangedEventHandler?	PropertyChanged;
 
 	#endregion
 
@@ -19,53 +26,21 @@ public class TranslatorPreferences
 	{
 	}
 
-	/// <summary>
-	/// Run the installations of the registry values.
-	/// </summary>
-	private void OnInstall()
-	{
-		string? baseDirectory;
+	#endregion
 
-		// If we are debugging the executing assembly is in the bin\debug directory, so we need to move up a couple levels
-		// to get to a location to reference from.  We want to base directory of the project in that case.
-#if DEBUG
-		baseDirectory = DigitalProduction.Reflection.Assembly.Path(System.Reflection.Assembly.GetExecutingAssembly());
-		if (baseDirectory != null)
-		{
-			baseDirectory = DigitalProduction.IO.Path.ChangeDirectoryDotDot(baseDirectory, 3);
-		}
-		baseDirectory = System.IO.Path.Combine(baseDirectory??"", "Data Translator\\");
+	#region Properties
 
-		TranslatorPreferences.TranslationMatrixDirectory	= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\");
-		TranslatorPreferences.UnitsFile						= System.IO.Path.Combine(baseDirectory, "ProgramData Files\\Units.xml");
-		TranslatorPreferences.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "User Files\\Configuration List.xml");
-		TranslatorPreferences.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "User Files\\Field Meta Data.xml");
-#else
-		baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-		baseDirectory = System.IO.Path.Combine(baseDirectory, _companyName + "\\");
-		baseDirectory = System.IO.Path.Combine(baseDirectory, _softwareName + "\\");
-			
-		this.TranslationMatrixDirectory		= baseDirectory;
-		this.UnitsFile						= System.IO.Path.Combine(baseDirectory, "Units.xml");
-
-		// The folder for the roaming current user.
-		baseDirectory						= Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		baseDirectory						= System.IO.Path.Combine(baseDirectory, _companyName + "\\");
-		baseDirectory						= System.IO.Path.Combine(baseDirectory, _softwareName + "\\");
-		this.ConfigurationListFile			= System.IO.Path.Combine(baseDirectory, "Configuration List.xml");
-		this.FieldMetaDataFile				= System.IO.Path.Combine(baseDirectory, "Field Meta Data.xml");
-#endif
-	}
+	public static TranslatorPreferences Instance => _instance;
 
 	#endregion
 
-	#region Registry Keys
+	#region Keys
 
 	/// <summary>
 	/// Return the key that holds the data translator entries.
 	/// </summary>
 	/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
-	protected static string TranslationKey()
+	protected string TranslationKey()
 	{
 		return "DataTranslation.";
 	}
@@ -75,7 +50,7 @@ public class TranslatorPreferences
 	/// Return the key that holds the options.
 	/// </summary>
 	/// <returns>Returns the registry key if it could be accessed, null if an error occurs.</returns>
-	protected static string OptionsKey()
+	protected string OptionsKey()
 	{
 		return TranslationKey() + "Options.";
 	}
@@ -87,7 +62,7 @@ public class TranslatorPreferences
 	/// <summary>
 	/// Translation matrix files default location.
 	/// </summary>
-	public static string TranslationMatrixDirectory
+	public string TranslationMatrixDirectory
 	{
 		get
 		{
@@ -103,7 +78,7 @@ public class TranslatorPreferences
 	/// <summary>
 	/// Units file location.
 	/// </summary>
-	public static string UnitsFile
+	public string UnitsFile
 	{
 		get
 		{
@@ -119,7 +94,7 @@ public class TranslatorPreferences
 	/// <summary>
 	/// Configuration list file location.
 	/// </summary>
-	public static string ConfigurationListFile
+	public string ConfigurationListFile
 	{
 		get
 		{
@@ -135,7 +110,7 @@ public class TranslatorPreferences
 	/// <summary>
 	/// Field meta data file location.
 	/// </summary>
-	public static string FieldMetaDataFile
+	public string FieldMetaDataFile
 	{
 		get
 		{
@@ -151,7 +126,7 @@ public class TranslatorPreferences
 	/// <summary>
 	/// Last source of input for a translation or import.
 	/// </summary>
-	public static string LastTranslationInputFile
+	public string LastTranslationInputFile
 	{
 		get
 		{
@@ -167,7 +142,7 @@ public class TranslatorPreferences
 	/// <summary>
 	/// Last source of input for a translation or import.
 	/// </summary>
-	public static string LastTranslationOutputFile
+	public string LastTranslationOutputFile
 	{
 		get
 		{
@@ -180,7 +155,7 @@ public class TranslatorPreferences
 		}
 	}
 
-	public static bool NumberOfColumnsMustMatchValidation
+	public bool NumberOfColumnsMustMatchValidation
 	{
 		get
 		{
@@ -193,7 +168,7 @@ public class TranslatorPreferences
 		}
 	}
 
-	public static bool DateTimeFormattedCorrectlyValidation
+	public bool DateTimeFormattedCorrectlyValidation
 	{
 		get
 		{
@@ -206,7 +181,7 @@ public class TranslatorPreferences
 		}
 	}
 
-	public static bool HighPassDateValidation
+	public bool HighPassDateValidation
 	{
 		get
 		{
@@ -219,7 +194,7 @@ public class TranslatorPreferences
 		}
 	}
 
-	public static DateTime HighPassDateCutOff
+	public DateTime HighPassDateCutOff
 	{
 		get
 		{
@@ -232,7 +207,7 @@ public class TranslatorPreferences
 		}
 	}
 
-	public static bool LowPassDateValidation
+	public bool LowPassDateValidation
 	{
 		get
 		{
@@ -245,17 +220,43 @@ public class TranslatorPreferences
 		}
 	}
 
-	public static DateTime LowPassDateCutOff
+	public DateTime LowPassDateCutOff
 	{
-		get
-		{
-			return Preferences.Default.Get(TranslationKey()+"Low Pass Date Cut Off", System.DateTime.Now);
-		}
+		get => GetValue<DateTime>(TranslationKey()+"Low Pass Date Cut Off", System.DateTime.Now);
 
 		set
 		{
 			Preferences.Default.Set(TranslationKey()+"Low Pass Date Cut Off", value);
 		}
+	}
+
+	#endregion
+
+	#region Setting and Getting Properties
+
+
+	protected bool SetValue<T>(string propertyName, T value) where T : IComparable
+	{
+		T? existing = Preferences.Default.Get(propertyName, default(T));
+
+		if (existing != null && EqualityComparer<T>.Default.Equals(existing, value))
+		{
+			Preferences.Default.Set(propertyName, value);
+			OnPropertyChanged(propertyName);
+			return true;
+		}
+
+		return false;
+	}
+
+	protected T? GetValue<T>(string propertyName, T defaultValue)
+	{
+		return Preferences.Default.Get(propertyName, defaultValue);
+	}
+
+	protected void OnPropertyChanged([CallerMemberName] string propertyName = null!)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
 	#endregion
