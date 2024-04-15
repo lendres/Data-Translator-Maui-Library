@@ -10,7 +10,7 @@ public class Controller
 	private InputProcessor?					_inputProcessor;
 	private Validator?						_validator;
 	private Translator?						_translator;
-	private OutputProcessor?					_outputProcessor;
+	private OutputProcessor?				_outputProcessor;
 
 	#endregion
 
@@ -81,7 +81,8 @@ public class Controller
 		// Input -> Validate -> Translation -> Output.
 		_inputProcessor			= ProcessorObjectFactory.CreateInputProcessor(configuration.InputProcessorName);
 		_validator				= new Validator();
-		_translator				= new Translator(System.IO.Path.Combine(TranslatorPreferences.TranslationMatrixDirectory, configuration.TranslationMatrixFile));
+		_translator				= new Translator(Path.Combine(TranslatorPreferences.TranslationMatrixDirectory, configuration.TranslationMatrixFile));
+
 		_outputProcessor		= ProcessorObjectFactory.CreateOutputProcessor(configuration.OutputProcessorName);
 	}
 
