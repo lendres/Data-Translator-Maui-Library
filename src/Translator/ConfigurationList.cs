@@ -13,7 +13,6 @@ public partial class ConfigurationList
 	#region Members
 
 	private List<Configuration>						_configurations				= new();
-	private string									_path						= "";
 
 	#endregion
 
@@ -67,23 +66,6 @@ public partial class ConfigurationList
 		get
 		{
 			return _configurations.Count;
-		}
-	}
-
-	/// <summary>
-	/// Path the instance was created from.  Used to resave the file later.
-	/// </summary>
-	[XmlIgnore()]
-	public string Path
-	{
-		get
-		{
-			return _path;
-		}
-
-		set
-		{
-			_path = value;
 		}
 	}
 
@@ -191,20 +173,11 @@ public partial class ConfigurationList
 	/// <summary>
 	/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
 	/// </summary>
-	public void Serialize()
-	{
-		SerializationSettings settings				= new(this, _path);
-		settings.XmlSettings.NewLineOnAttributes	= false;
-		Serialization.SerializeObject(settings);
-	}
-
-	/// <summary>
-	/// Write this object to a file.  The Path must be set and represent a valid path or this method will throw an exception.
-	/// </summary>
 	public void Serialize(string path)
 	{
-		_path = path;
-		Serialize();
+		SerializationSettings settings				= new(this, path);
+		settings.XmlSettings.NewLineOnAttributes	= false;
+		Serialization.SerializeObject(settings);
 	}
 
 	/// <summary>
@@ -217,7 +190,6 @@ public partial class ConfigurationList
 		ConfigurationList? configurationList = Serialization.DeserializeObject<ConfigurationList>(path) ??
 			throw new Exception("Unable to deserialize the configuraiton list.");
 
-		configurationList.Path              = path;
 		return configurationList;
 	}
 

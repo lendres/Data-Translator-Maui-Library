@@ -19,11 +19,6 @@
 		<!-- <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion> -->
 	</PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-	</ItemGroup>
-
 
 
 	<ItemGroup>
@@ -42,6 +37,18 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\C Sharp Maui Library\src\Library\DigitalProductionMauiLibrary.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="User Files\Configuration List.xml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="User Files\Field Meta Data.xml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="User Files\Units.xml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

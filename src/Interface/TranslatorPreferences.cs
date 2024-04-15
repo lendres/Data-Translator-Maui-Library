@@ -1,4 +1,7 @@
-﻿namespace DataConverter;
+﻿using System.ComponentModel;
+using DigitalProduction.Delegates;
+
+namespace DataConverter;
 
 /// <summary>
 /// Registry access and setting storage.
@@ -6,6 +9,11 @@
 public class TranslatorPreferences
 {
 	#region Members
+
+	public static event		NoArgumentsEventHandler?		TranslationMatrixDirectoryChanged;
+	public static event		NoArgumentsEventHandler?        UnitsFileChanged;
+	public static event		NoArgumentsEventHandler?        ConfigurationListFileChanged;
+	public static event		NoArgumentsEventHandler?        FieldMetaDataFileChanged;
 
 	#endregion
 
@@ -97,6 +105,7 @@ public class TranslatorPreferences
 		set
 		{
 			Preferences.Default.Set(OptionsKey()+"Translation Matrix Directory", value);
+			TranslationMatrixDirectoryChanged?.Invoke();
 		}
 	}
 
@@ -113,6 +122,7 @@ public class TranslatorPreferences
 		set
 		{
 			Preferences.Default.Set(OptionsKey()+"Units File", value);
+			UnitsFileChanged?.Invoke();
 		}
 	}
 
@@ -129,6 +139,7 @@ public class TranslatorPreferences
 		set
 		{
 			Preferences.Default.Set(OptionsKey()+"Configuration List File", value);
+			ConfigurationListFileChanged?.Invoke();
 		}
 	}
 
@@ -145,6 +156,7 @@ public class TranslatorPreferences
 		set
 		{
 			Preferences.Default.Set(OptionsKey()+"Field Meta Data File", value);
+			FieldMetaDataFileChanged?.Invoke();
 		}
 	}
 
