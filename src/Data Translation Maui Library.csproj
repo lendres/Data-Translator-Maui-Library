@@ -24,9 +24,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\C Sharp Maui Library\src\Library\DigitalProductionMauiLibrary.csproj" />
-	</ItemGroup>
+
 
 	<ItemGroup>
 	  <Reference Include="Thor.Units.Maui">
@@ -35,7 +33,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Platforms\Android\" />
+	  <Folder Include="Platforms\iOS\" />
+	  <Folder Include="Platforms\MacCatalyst\" />
+	  <Folder Include="Platforms\Tizen\" />
 	  <Folder Include="Platforms\Windows\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\C Sharp Maui Library\src\Library\DigitalProductionMauiLibrary.csproj" />
 	</ItemGroup>
 
 </Project>
